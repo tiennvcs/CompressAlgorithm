@@ -1,54 +1,36 @@
 import argparse
 import os
 import time
+from collections import Counter
 
 def get_arguments():
-    parser = argparse.ArgumentParser(description='The Run Length Coding algorithms')
+    parser = argparse.ArgumentParser(description='The Shannon-Fano algorithms')
     parser.add_argument('--mode', '-m', default='compression',
                         choices=['compression', 'decompression'],
                         help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_rlc.txt',
+    parser.add_argument('--input', '-i', default='./input/input_shanon-fano.txt',
                         help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_rlc.txt',
+    parser.add_argument('--output', '-o', default='./output/output_shanon-fano.txt',
                         help='The output file path')
     return vars(parser.parse_args())
 
 
-def compression_ratio(input_string:str, encoded_string:str):
-    b0 = len(input_string)
-    b1 = len(encoded_string)
-    return b0 / b1
+def shanon_FanoCompression(input_string: str):
 
+    print("[INFO] The string need encoded is \n\t{}".format(input_string))
 
-def rlc_compression(input_string: str):
-    print("[INFO] The string need encode is \n\t{}".format(input_string))
-    res_string = str()
+    # Count the frequency of the symbols in input_string
+    print("[INFO] Counting the frequency of symbols in string ...")
+    frequency_count = Counter(sorted(input_string))
+    del frequency_count['\n']
+    time.sleep(1)
 
-    l = len(input_string)
-    i = 0
-
-    print("[INFO] Encoding ...")
-    while (i < l - 1):
-
-        # Count the occurency of current word
-        count = 1
-        while (i < l and input_string[i] == input_string[i+1]):
-            count += 1
-            i += 1
-
-        print("\t- {} occur {} times continuous..".format(input_string[i], count))
-        time.sleep(0.5)
-
-        # Append the current character with number of times it appear
-        res_string = res_string + "{}{}".format(input_string[i], count)
-        i+= 1
-
-    print("--> The string {} is encoded with code is {}".format({input_string}, {res_string}))
-    return res_string
+    # Sort the frequency_count ascending.
+    sorted_counts = {k: v for k, v in sorted(frequency_count.items(), key=lambda item: item[1])}
 
 
 
-def rlc_decompression(encoded_string):
+def shanon_FanoDecompression(encoded_string):
     res_string = ""
 
     print("[INFO] The string need decoded is\n{}".format(encoded_string))
@@ -78,19 +60,16 @@ def main(args):
         string = f.read()
     # Check the mode
     if args['mode'] == 'compression':
-        result = rlc_compression(input_string=string)
-        compress_ratio = compression_ratio(input_string=string, encoded_string=result)
-        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        result = shanon_FanoCompression(string)
         # Store the output data to disk
         with open(args['output'], 'w') as f:
             f.write(result)
 
     elif args['mode'] == 'decompression':
-        rlc_decompression(string)
+        shanon_FanoDecompression(string)
     else:
         print("The selected mode is not valid")
         exit(0)
-
 
 
 if __name__ == '__main__':

@@ -73,3 +73,10 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 2. Trần Thị Phương Thảo, <strike>email</strike>
 
 3. Nguyễn Văn Tiến, email: tiennvuit@gmail.com .
+
+
+## References:
+
+- [Run Length Encoding](https://www.geeksforgeeks.org/run-length-encoding/)
+
+- [Shannon-Fano-Algorithm](https://github.com/Mohammed-Ashour/Shannon-Fano-Algorithm)
