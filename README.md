@@ -68,8 +68,8 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 
 ## Information about team
 ----
-	1. Trần Đình Khang, <strike>email</strike>
+1. Trần Đình Khang, <strike>email</strike>
 
-	2. Trần Thị Phương Thảo, <strike>email</strike>
+2. Trần Thị Phương Thảo, <strike>email</strike>
 
-	3. Nguyễn Văn Tiến, email: tiennvuit@gmail.com .
+3. Nguyễn Văn Tiến, email: tiennvuit@gmail.com .
