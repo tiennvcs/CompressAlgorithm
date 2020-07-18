@@ -47,7 +47,7 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 
 | Algorithm                                     	| Perspective 	| Pros 	| Cons 	|
 |-----------------------------------------------	|-------------	|------	|------	|
-| <strike>Run Length Coding</strike>                             	|             	|      	|      	|
+| Run Length Coding                             	|             	|      	|      	|
 | <strike>Shannon-Fano Algorithm (top-down approach)</strike>    	|             	|      	|      	|
 | <strike>Huffman Coding Algorithm (bottom-up approach)</strike> 	|             	|      	|      	|
 | <strike>Extended Huffman Coding</strike>                       	|             	|      	|      	|
