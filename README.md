@@ -7,25 +7,27 @@ Data compression is one of the most important when we need store and transmit da
 
 The project will implement common compression and decompression algorithm using Python programming language, includes:
 
-	- Run Length Coding (RLC).
+- Run Length Coding (RLC).
 
-	- Variable Length Coding (VLC, includes:
+- Variable Length Coding (VLC, includes:
 
-		+ Shannon-Fano Algorithm (top-down approach).
+	+ Shannon-Fano Algorithm (top-down approach).
 
-		+ Huffman Coding Algorithm(bottom-up approach).
+	+ Huffman Coding Algorithm(bottom-up approach).
 
-		+ Extended Huffman Coding.
+	+ Extended Huffman Coding.
 
-		+ Adaptive Huffman Coding (stream data).
+	+ Adaptive Huffman Coding (stream data).
 
-	- Dictionary-base Coding (LZW).
+- Dictionary-base Coding (LZW).
 
-	- Arithmetic Coding.
+- Arithmetic Coding.
 
-	- Lossless JPEG (for image).
-	- Lossy JPEG (for image).
-	- k-mean clustering (for image).
+- Lossless JPEG (for image).
+
+- Lossy JPEG (for image).
+
+- k-mean clustering (for image).
 
 
 *Note: the data for Lossless, Lossy JPEG, k-mean clustering compression is image, the other algorithms use text instead.*
