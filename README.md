@@ -1,6 +1,7 @@
 # Implement of some data compression algorithm
 
 ## Description
+----
 
 Data compression is one of the most important when we need store and transmit data, such as text, image, video.
 
@@ -30,6 +31,7 @@ The project will implement common compression and decompression algorithm using 
 *Note: the data for Lossless, Lossy JPEG, k-mean clustering compression is image, the other algorithms use text instead.*
 
 ## Usage
+----
 
 Example for compression the data in file with name *fileinput* using Run Length Coding algorithm.
 
@@ -56,6 +58,7 @@ python compression.py --stage *compress* --input *fileinput* --output *fileoutpu
 
 
 ## Some demo
+----
 
 ### Run length coding
 ----
@@ -94,17 +97,19 @@ python compression.py --stage *compress* --input *fileinput* --output *fileoutpu
 
 ----
 ### K-mean clustering
+----
 
 
 
 ## Resource:
+----
 
 - <strike>Colab notbook.</strike>
 
 - <strike>Video demo.</strike>
 	
 ## Information about team
-
+----
 	1. Trần Đình Khang, <strike>email</strike>
 	
 	2. Trần Thị Phương Thảo, <strike>email</strike>
