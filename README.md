@@ -5,28 +5,28 @@
 
 Data compression is one of the most important when we need store and transmit data, such as text, image, video.
 
-The project will implement common compression and decompression algorithm using Python programming language, includes: 
+The project will implement common compression and decompression algorithm using Python programming language, includes:
 
 	- Run Length Coding (RLC).
-	
+
 	- Variable Length Coding (VLC, includes:
-	
+
 		+ Shannon-Fano Algorithm (top-down approach).
-		
+
 		+ Huffman Coding Algorithm(bottom-up approach).
-		
+
 		+ Extended Huffman Coding.
-		
-		+ Adaptive Huffman Coding (stream data).	
-		
+
+		+ Adaptive Huffman Coding (stream data).
+
 	- Dictionary-base Coding (LZW).
-	
+
 	- Arithmetic Coding.
-	
+
 	- Lossless JPEG (for image).
 	- Lossy JPEG (for image).
 	- k-mean clustering (for image).
-	
+
 
 *Note: the data for Lossless, Lossy JPEG, k-mean clustering compression is image, the other algorithms use text instead.*
 
@@ -36,10 +36,10 @@ The project will implement common compression and decompression algorithm using 
 Example for compression the data in file with name *fileinput* using Run Length Coding algorithm.
 
 ```bash
-python compression.py --stage *compress* --input *fileinput* --output *fileoutput*
+python algorithms/rlc.py --mode *compression* --input *fileinput* --output *fileoutput*
 ```
 
-*If you want to decomrpess the information change the option **stage** to **decompression** and given the suitable arguments*.
+*If you want to decomrpess the information change the option **mode** to **decompression** and given the suitable arguments*.
 
 ## Evaluate the algorithms
 
@@ -107,11 +107,11 @@ python compression.py --stage *compress* --input *fileinput* --output *fileoutpu
 - <strike>Colab notbook.</strike>
 
 - <strike>Video demo.</strike>
-	
+
 ## Information about team
 ----
 	1. Trần Đình Khang, <strike>email</strike>
-	
+
 	2. Trần Thị Phương Thảo, <strike>email</strike>
-	
+
 	3. Nguyễn Văn Tiến, email: tiennvuit@gmail.com .
