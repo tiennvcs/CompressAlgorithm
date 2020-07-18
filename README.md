@@ -59,50 +59,6 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 | <strike>k-mean clustering</strike>                             	|             	|      	|      	|
 
 
-## Some demo
-----
-
-### Run length coding
-----
-
-----
-### Shannon-Fano Coding
-----
-
-----
-### Huffman Coding Algorithm
-----
-
-----
-### Extended Huffman Coding
-----
-
-----
-### Adaptive Huffman Coding
-----
-
-----
-### Dictionary-based Coding
-----
-
----
-### Arithmetic Coding
-----
-
-----
-### Lossless JPEG
-----
-
-----
-### Lossy JPEG
-----
-
-----
-### K-mean clustering
-----
-
-
-
 ## Resource:
 ----
 
