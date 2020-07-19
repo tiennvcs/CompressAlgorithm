@@ -51,12 +51,8 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 | <strike>Shannon-Fano Algorithm (top-down approach)</strike>    	|             	|      	|      	|
 | <strike>Huffman Coding Algorithm (bottom-up approach)</strike> 	|             	|      	|      	|
 | <strike>Extended Huffman Coding</strike>                       	|             	|      	|      	|
-| <strike>Adaptive Huffman Coding</strike>                       	|             	|      	|      	|
-| <strike>Dictionary-based Coding (LZW)</strike>                 	|             	|      	|      	|
-| <strike>Arithmetic coding</strike>                             	|             	|      	|      	|
-| <strike>Lossless JPEG</strike>                                 	|             	|      	|      	|
-| <strike>Lossy JPEG</strike>                                    	|             	|      	|      	|
-| <strike>k-mean clustering</strike>                             	|             	|      	|      	|
+| <strike>Adaptive Huffman Coding</strike>      K-means clustering will group similar colors together into ‘k’ clusters (say =4) of different colors (RGB values). Therefore, each cluster centroid is the representative of the color vector in RGB color space of its respective cluster	|             	|      	|      	|
+| <strike>k-mean clustering</strike>                             	| K-means clustering will group similar colors together into k clusters (say k=64) of different colors (RGB values). Therefore, each cluster centroid is the representative of the color vector in RGB color space of its respective cluster            	|      	|      	|
 
 
 ## Resource:
@@ -80,3 +76,8 @@ python algorithms/rlc.py --mode *compression* --input *fileinput* --output *file
 - [Run Length Encoding](https://www.geeksforgeeks.org/run-length-encoding/)
 
 - [Shannon-Fano-Algorithm](https://github.com/Mohammed-Ashour/Shannon-Fano-Algorithm)
+
+
+
+
+- [K-mean clustering](https://www.geeksforgeeks.org/image-compression-using-k-means-clustering/)
