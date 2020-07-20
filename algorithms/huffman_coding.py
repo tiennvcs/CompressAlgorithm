@@ -5,16 +5,7 @@ from collections import Counter
 import pickle
 
 
-def get_arguments():
-    parser = argparse.ArgumentParser(description='The Huffman Coding algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
-                        help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_huffman.txt',
-                        help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_huffman.pl',
-                        help='The output file path')
-    return vars(parser.parse_args())
+"""Huffman coding relative function"""
 
 
 # Creating tree nodes
@@ -35,7 +26,7 @@ class NodeTree(object):
 
 
 def huffman_code_tree(node, left=True, binString=''):
-    if type(node) is str:
+    if type(node) is int or type(node) is str:
         return {node: binString}
     (l, r) = node.children()
     d = dict()
@@ -68,23 +59,31 @@ def huffman_coding_compression(input_string: str):
     for char in input_string:
         encoded_string += huffman_code[char]
     print(output_freq)
-    print("--> The string {} is encoded with code is {}".format({input_string}, {encoded_string}))
-    print(huffman_code)
+    print("--> The encoded with code is {}".format({encoded_string}))
 
     return huffman_code, encoded_string
 
 
-def huffman_coding_decompression(huffman_code: dict, encoded_string: str):
+def huffman_coding_decompression(huffman_code: dict, encoded_string: str, type_input="str"):
     print("[INFO] Decompressing ...")
     key_list = list(huffman_code.keys())
     val_list = list(huffman_code.values())
-    res_string = ''
     s = ''
-    for char in encoded_string:
-        s += char
-        if s in val_list:
-            res_string += key_list[val_list.index(s)]
-            s = ''
+    if type_input == "str":
+        res_string = ''
+        for char in encoded_string:
+            s += char
+            if s in val_list:
+                res_string += str(key_list[val_list.index(s)])
+                s = ''
+    else:
+        res_string = []
+        for char in encoded_string:
+            s += char
+            if s in val_list:
+                res_string.append(key_list[val_list.index(s)])
+                s = ''
+    print(res_string)
     return res_string
 
 
@@ -94,8 +93,23 @@ def compression_ratio(input_string:str, encoded_string:str):
     return b0 / b1
 
 
+#
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser(description='The Huffman Coding algorithms')
+    parser.add_argument('--mode', '-m', default='compression',
+                        choices=['compression', 'decompression'],
+                        help='The mode for the algorithm work')
+    parser.add_argument('--input', '-i', default='./input/input_huffman.txt',
+                        help='The input file path')
+    parser.add_argument('--output', '-o', default='./output/output_huffman.pl',
+                        help='The output file path')
+    return vars(parser.parse_args())
+
+
 def main(args):
-    # Check the input path is exis whether or not
+    # Check the input path is exist whether or not
     if not os.path.isfile(args['input']):
         print("The input file is not exist")
         exit(1)
