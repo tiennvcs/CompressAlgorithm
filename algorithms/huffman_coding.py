@@ -2,6 +2,7 @@ import argparse
 import os
 import time
 from collections import Counter
+import pickle
 
 
 def get_arguments():
@@ -9,9 +10,9 @@ def get_arguments():
     parser.add_argument('--mode', '-m', default='compression',
                         choices=['compression', 'decompression'],
                         help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_rlc.txt',
+    parser.add_argument('--input', '-i', default='./input/input_huffman.txt',
                         help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_rlc.txt',
+    parser.add_argument('--output', '-o', default='./output/output_huffman.pl',
                         help='The output file path')
     return vars(parser.parse_args())
 
@@ -73,7 +74,8 @@ def huffman_coding_compression(input_string: str):
     return huffman_code, encoded_string
 
 
-def huffman_coding_decompression(encoded_string: str, huffman_code):
+def huffman_coding_decompression(huffman_code: dict, encoded_string: str):
+    print("[INFO] Decompressing ...")
     key_list = list(huffman_code.keys())
     val_list = list(huffman_code.values())
     res_string = ''
@@ -83,18 +85,13 @@ def huffman_coding_decompression(encoded_string: str, huffman_code):
         if s in val_list:
             res_string += key_list[val_list.index(s)]
             s = ''
-    print(res_string)
     return res_string
 
 
-def compression_ratio(input_string: str, encoded_string: str):
+def compression_ratio(input_string:str, encoded_string:str):
     b0 = len(input_string) * 8
     b1 = len(encoded_string)
     return b0 / b1
-
-
-huf, end = huffman_coding_compression('BCAADDDCCACACAC')
-huffman_coding_decompression(end, huf)
 
 
 def main(args):
@@ -102,20 +99,27 @@ def main(args):
     if not os.path.isfile(args['input']):
         print("The input file is not exist")
         exit(1)
-    # Read the text data from file
-    with open(args['input'], 'r') as f:
-        string = f.read()
-    # Check the mode
+
     if args['mode'] == 'compression':
-        result = huffman_coding_compression(input_string=string)
-        compress_ratio = compression_ratio(input_string=string, encoded_string=result)
+        # Read the text data from file
+        with open(args['input'], 'r') as f:
+            string = f.read()
+
+        (huffman_code, encoded_string) = huffman_coding_compression(input_string=string)
+
+        compress_ratio = compression_ratio(input_string=string, encoded_string=encoded_string)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
-        with open(args['output'], 'w') as f:
-            f.write(result)
+        with open(args['output'], 'wb') as f:
+            pickle.dump((huffman_code, encoded_string), f)
 
     elif args['mode'] == 'decompression':
-        huffman_coding_decompression(string)
+        with open(args['input'], 'rb') as f:
+            (huffman_code, encoded_string) = pickle.load(f)
+        decompressed_string = huffman_coding_decompression(
+                        huffman_code=huffman_code, encoded_string=encoded_string)
+        print("The decoded string is {}".format(decompressed_string))
+
     else:
         print("The selected mode is not valid")
         exit(0)
@@ -124,4 +128,3 @@ def main(args):
 if __name__ == '__main__':
     args = get_arguments()
     main(args)
-

@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import pickle
 from jpeg_utils import predictors
+from huffman_coding import huffman_coding_compression. huffman_coding_decompression
 
 
 def get_arguments():
@@ -27,7 +28,6 @@ def compression_ratio(input_image:str, different_matrix: np.ndarray):
     rows = input_image.shape[0]
     cols = input_image.shape[1]
     origin_bits = rows*cols*3*8
-
 
     print("- The number of bits needed represent image is {}".format(origin_bits))
     print("- The number of bits needed represent the ENCODED image: {}".format(encoded_bits))
