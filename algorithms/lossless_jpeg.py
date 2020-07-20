@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import pickle
 from jpeg_utils import predictors
-from huffman_coding import huffman_coding_compression. huffman_coding_decompression
+from huffman_coding import huffman_Compression, huffman_Decompression
 
 
 def get_arguments():
