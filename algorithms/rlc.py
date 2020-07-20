@@ -12,7 +12,7 @@ def compression_ratio(input_string: str, encoded_string: str):
     return b0 / b1
 
 
-def rlc_compression(input_string: str):
+def rlc_Compression(input_string: str):
     print("[INFO] The string need encode is \n\t{}".format(input_string))
     res_string = str()
     l = len(input_string)
@@ -38,7 +38,7 @@ def rlc_compression(input_string: str):
     return res_string
 
 
-def rlc_decompression(encoded_string):
+def rlc_Decompression(encoded_string):
     res_string = ""
 
     print("[INFO] The string need decoded is\n{}".format(encoded_string))
@@ -84,7 +84,7 @@ def main(_args):
         string = f.read()
     # Check the mode
     if _args['mode'] == 'compression':
-        result = rlc_compression(input_string=string)
+        result = rlc_Compression(input_string=string)
         compress_ratio = compression_ratio(input_string=string, encoded_string=result)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
@@ -92,7 +92,7 @@ def main(_args):
             f.write(result)
 
     elif _args['mode'] == 'decompression':
-        rlc_decompression(string)
+        rlc_Decompression(string)
     else:
         print("The selected mode is not valid")
         exit(0)

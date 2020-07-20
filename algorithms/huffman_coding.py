@@ -44,7 +44,7 @@ def huffman_code_tree(node, left=True, binString=''):
     return d
 
 
-def huffman_coding_compression(input_string: str):
+def huffman_Compression(input_string: str):
     print("[INFO] Encoding ...")
     # Calculating frequency
     freq = dict(Counter(input_string))
@@ -74,7 +74,7 @@ def huffman_coding_compression(input_string: str):
     return huffman_code, encoded_string
 
 
-def huffman_coding_decompression(huffman_code: dict, encoded_string: str):
+def huffman_Decompression(huffman_code: dict, encoded_string: str):
     print("[INFO] Decompressing ...")
     key_list = list(huffman_code.keys())
     val_list = list(huffman_code.values())
@@ -95,6 +95,7 @@ def compression_ratio(input_string:str, encoded_string:str):
 
 
 def main(args):
+
     # Check the input path is exis whether or not
     if not os.path.isfile(args['input']):
         print("The input file is not exist")
@@ -105,7 +106,7 @@ def main(args):
         with open(args['input'], 'r') as f:
             string = f.read()
 
-        (huffman_code, encoded_string) = huffman_coding_compression(input_string=string)
+        (huffman_code, encoded_string) = huffman_Compression(input_string=string)
 
         compress_ratio = compression_ratio(input_string=string, encoded_string=encoded_string)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
@@ -116,9 +117,10 @@ def main(args):
     elif args['mode'] == 'decompression':
         with open(args['input'], 'rb') as f:
             (huffman_code, encoded_string) = pickle.load(f)
-        decompressed_string = huffman_coding_decompression(
+        print("[INFO] The encoded string is {}".format(encoded_string))
+        decompressed_string = huffman_Decompression(
                         huffman_code=huffman_code, encoded_string=encoded_string)
-        print("The decoded string is {}".format(decompressed_string))
+        print("[INFO] The origin string decoded is {}".format(decompressed_string))
 
     else:
         print("The selected mode is not valid")
