@@ -1,6 +1,5 @@
 import argparse
 import os
-import time
 from collections import Counter
 import pickle
 
@@ -16,22 +15,23 @@ class NodeTree(object):
         self.right = right
 
     def children(self):
-        return (self.left, self.right)
+        return self.left, self.right
 
     def nodes(self):
-        return (self.left, self.right)
+        return self.left, self.right
 
     def __str__(self):
         return '%s_%s' % (self.left, self.right)
 
 
-def huffman_code_tree(node, left=True, binString=''):
+def huffman_code_tree(node, left=True, bin_string=''):
     if type(node) is int or type(node) is str:
-        return {node: binString}
+        return {node: bin_string}
     (l, r) = node.children()
     d = dict()
-    d.update(huffman_code_tree(l, True, binString + '0'))
-    d.update(huffman_code_tree(r, False, binString + '1'))
+    d.update(huffman_code_tree(l, True, bin_string + '0'))
+    d.update(huffman_code_tree(r, False, bin_string + '1'))
+
     return d
 
 
@@ -58,9 +58,9 @@ def huffman_coding_compression(input_string: str):
     encoded_string = ''
     for char in input_string:
         encoded_string += huffman_code[char]
+
     print(output_freq)
     print("--> The encoded with code is {}".format({encoded_string}))
-
     return huffman_code, encoded_string
 
 
@@ -70,30 +70,31 @@ def huffman_coding_decompression(huffman_code: dict, encoded_string: str, type_i
     val_list = list(huffman_code.values())
     s = ''
     if type_input == "str":
-        res_string = ''
+        result = ''
         for char in encoded_string:
             s += char
             if s in val_list:
-                res_string += str(key_list[val_list.index(s)])
+                result += str(key_list[val_list.index(s)])
                 s = ''
     else:
-        res_string = []
+        result = []
         for char in encoded_string:
             s += char
             if s in val_list:
-                res_string.append(key_list[val_list.index(s)])
+                result.append(key_list[val_list.index(s)])
                 s = ''
-    print(res_string)
-    return res_string
+
+    print(result)
+    return result
 
 
-def compression_ratio(input_string:str, encoded_string:str):
+def compression_ratio(input_string: str, encoded_string: str):
     b0 = len(input_string) * 8
     b1 = len(encoded_string)
     return b0 / b1
 
 
-#
+"""Processing Function"""
 
 
 def get_arguments():
@@ -108,15 +109,15 @@ def get_arguments():
     return vars(parser.parse_args())
 
 
-def main(args):
+def main(_args):
     # Check the input path is exist whether or not
-    if not os.path.isfile(args['input']):
+    if not os.path.isfile(_args['input']):
         print("The input file is not exist")
         exit(1)
 
-    if args['mode'] == 'compression':
+    if _args['mode'] == 'compression':
         # Read the text data from file
-        with open(args['input'], 'r') as f:
+        with open(_args['input'], 'r') as f:
             string = f.read()
 
         (huffman_code, encoded_string) = huffman_coding_compression(input_string=string)
@@ -124,11 +125,11 @@ def main(args):
         compress_ratio = compression_ratio(input_string=string, encoded_string=encoded_string)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
-        with open(args['output'], 'wb') as f:
+        with open(_args['output'], 'wb') as f:
             pickle.dump((huffman_code, encoded_string), f)
 
-    elif args['mode'] == 'decompression':
-        with open(args['input'], 'rb') as f:
+    elif _args['mode'] == 'decompression':
+        with open(_args['input'], 'rb') as f:
             (huffman_code, encoded_string) = pickle.load(f)
         decompressed_string = huffman_coding_decompression(
                         huffman_code=huffman_code, encoded_string=encoded_string)
