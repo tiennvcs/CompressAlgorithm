@@ -13,7 +13,7 @@ def get_arguments():
     parser.add_argument('--mode', '-m', default='compression',
                         choices=['compression', 'decompression'],
                         help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_losslessjpeg1.jpg',
+    parser.add_argument('--input', '-i', default='./input/input_losslessjpeg2.jpg',
                         help='The input file path')
     parser.add_argument('--output', '-o', default='./output/output_losslessjpeg.pl',
                         help='The output file path')
@@ -56,11 +56,15 @@ def lossless_JPEG_Compression(image: np.ndarray, predictor):
     print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
     huffman_code, encoded_string = huffman_coding_compression(input_string=number_string)
 
-    return (predictor, huffman_code, encoded_string)
+    return (image.shape, predictor, huffman_code, encoded_string)
 
 
-def lossless_JPEG_Decompression(predictor: str, huffman_code: dict, encoding_huffman: str):
-    pass
+def lossless_JPEG_Decompression(predictor: str, huffman_code: dict, encoded_huffman: str):
+
+    # Huffman decoder
+    print("[INFO] Decompressing the encoded by Huffman decompressor ...")
+
+    #
 
 
 def main(args):
@@ -79,7 +83,7 @@ def main(args):
         cv2.destroyAllWindows()
 
         # Run the compression algorithm
-        (predictor, huffman_code, encoded_string) = lossless_JPEG_Compression(
+        (shape, predictor, huffman_code, encoded_string) = lossless_JPEG_Compression(
                                                         image=img, predictor=args['predictor'])
 
         compress_ratio = compression_ratio(input_image=img, encoded_string=encoded_string)
@@ -87,7 +91,7 @@ def main(args):
 
         # Store the output data to disk
         with open(args['output'], 'wb') as f:
-            pickle.dump((predictor, huffman_code, encoded_string), f)
+            pickle.dump((shape, predictor, huffman_code, encoded_string), f)
 
     elif args['mode'] == 'decompression':
         # Check the input file whether or not exis
