@@ -24,13 +24,13 @@ class NodeTree(object):
         return '%s_%s' % (self.left, self.right)
 
 
-def huffman_code_tree(node, left=True, bin_string=''):
+def huffman_code_tree(node, bin_string=''):
     if type(node) is int or type(node) is str:
         return {node: bin_string}
     (l, r) = node.children()
     d = dict()
-    d.update(huffman_code_tree(l, True, bin_string + '0'))
-    d.update(huffman_code_tree(r, False, bin_string + '1'))
+    d.update(huffman_code_tree(l, bin_string + '0'))
+    d.update(huffman_code_tree(r, bin_string + '1'))
 
     return d
 
@@ -84,7 +84,7 @@ def huffman_coding_decompression(huffman_code: dict, encoded_string: str, type_i
                 result.append(key_list[val_list.index(s)])
                 s = ''
 
-    print(result)
+    print("--> The decoded with code is {}".format({result}))
     return result
 
 
@@ -131,9 +131,7 @@ def main(_args):
     elif _args['mode'] == 'decompression':
         with open(_args['input'], 'rb') as f:
             (huffman_code, encoded_string) = pickle.load(f)
-        decompressed_string = huffman_coding_decompression(
-                        huffman_code=huffman_code, encoded_string=encoded_string)
-        print("The decoded string is {}".format(decompressed_string))
+        huffman_coding_decompression(huffman_code=huffman_code, encoded_string=encoded_string)
 
     else:
         print("The selected mode is not valid")
