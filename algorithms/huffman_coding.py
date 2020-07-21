@@ -60,6 +60,7 @@ def huffman_coding_compression(input_string: str):
         encoded_string += huffman_code[char]
 
     print(output_freq)
+
     print("--> The encoded with code is {}".format({encoded_string}))
     return huffman_code, encoded_string
 

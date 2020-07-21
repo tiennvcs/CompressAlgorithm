@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 import pickle
 from jpeg_utils import predictors
-from huffman_coding import huffman_Compression, huffman_Decompression
+from huffman_coding import huffman_coding_compression, huffman_coding_decompression
 
 
 def get_arguments():
@@ -13,7 +13,7 @@ def get_arguments():
     parser.add_argument('--mode', '-m', default='compression',
                         choices=['compression', 'decompression'],
                         help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_losslessjpeg.jpg',
+    parser.add_argument('--input', '-i', default='./input/input_losslessjpeg1.jpg',
                         help='The input file path')
     parser.add_argument('--output', '-o', default='./output/output_losslessjpeg.pl',
                         help='The output file path')
@@ -23,11 +23,13 @@ def get_arguments():
     return vars(parser.parse_args())
 
 
-def compression_ratio(input_image:str, different_matrix: np.ndarray):
+def compression_ratio(input_image:np.ndarray, encoded_string: str):
     print("[INFO] Calculate the needed bits...")
     rows = input_image.shape[0]
     cols = input_image.shape[1]
     origin_bits = rows*cols*3*8
+    encoded_bits = len(encoded_string)
+    ratio = origin_bits / encoded_bits
 
     print("- The number of bits needed represent image is {}".format(origin_bits))
     print("- The number of bits needed represent the ENCODED image: {}".format(encoded_bits))
@@ -35,26 +37,29 @@ def compression_ratio(input_image:str, different_matrix: np.ndarray):
     return ratio
 
 def lossless_JPEG_Compression(image: np.ndarray, predictor):
+
+    print("[INFO] Calculating the prediction matrix ...")
     prediction_matrix = predictors[predictor](image)
 
+    print("[INFO] Calculating the different matrix ...")
     different_matrix = np.abs(image - prediction_matrix)
 
-
-    cv2.imshow('Different image', different_matrix)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
-
     # Scan the different_matrix follow the zigzag and use Huffman algorithm to encode
-    string_input = ""
-    for i in range(different_matrix.shape[0]):
-        for j in range(different_matrix.shape[1]):
-            string_input += str(different_matrix[i][j]) + " "
+    print("[INFO] Scanning the different matrix ...")
+    rows = image.shape[0]
+    cols = image.shape[1]
+    number_string = ""
+    for i in range(rows):
+        for j in range(cols):
+            number_string += str(different_matrix[i][j]) + " "
 
-    encoding_huffman = huffman_Compression(string_input)
-    return (predictor, encoding_huffman)
+    print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
+    huffman_code, encoded_string = huffman_coding_compression(input_string=number_string)
+
+    return (predictor, huffman_code, encoded_string)
 
 
-def lossless_JPEG_Decompression(predictor: str, encoding_huffman: object):
+def lossless_JPEG_Decompression(predictor: str, huffman_code: dict, encoding_huffman: str):
     pass
 
 
@@ -74,13 +79,15 @@ def main(args):
         cv2.destroyAllWindows()
 
         # Run the compression algorithm
-        lossless_JPEG_Compression(image=img, predictor=args['predictor'])
-        #
-        # compress_ratio = compression_ratio(input_image=img, clusters=args['clusters'])
-        # print("[INFO] The compression ratio is {}".format(compress_ratio))
-        # # Store the output data to disk
-        # with open(args['output'], 'wb') as f:
-        #     pickle.dump((shape, cluster_centers, labels), f)
+        (predictor, huffman_code, encoded_string) = lossless_JPEG_Compression(
+                                                        image=img, predictor=args['predictor'])
+
+        compress_ratio = compression_ratio(input_image=img, encoded_string=encoded_string)
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+
+        # Store the output data to disk
+        with open(args['output'], 'wb') as f:
+            pickle.dump((predictor, huffman_code, encoded_string), f)
 
     elif args['mode'] == 'decompression':
         # Check the input file whether or not exis
