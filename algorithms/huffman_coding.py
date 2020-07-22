@@ -25,7 +25,7 @@ class NodeTree(object):
 
 
 def huffman_code_tree(node, bin_string=''):
-    if type(node) is int or type(node) is str:
+    if type(node) is float or type(node) is str:
         return {node: bin_string}
     (l, r) = node.children()
     d = dict()
