@@ -48,11 +48,13 @@ def lossless_JPEG_Compression(image: np.ndarray, predictor:str):
     print("[INFO] Scanning the different matrix ...")
     rows = image.shape[0]
     cols = image.shape[1]
-
     number_list = []
     for i in range(rows):
         for j in range(cols):
-            number_list.append(different_matrix[i][j])
+            number_list.append(float(different_matrix[i][j][0]))
+            number_list.append(float(different_matrix[i][j][1]))
+            number_list.append(float(different_matrix[i][j][2]))
+
 
     print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
     huffman_code, encoded_string = huffman_coding_compression(input_string=number_list)
