@@ -50,6 +50,20 @@ def k_mean_Decompression(image_shape: tuple, cluster_centers:np.ndarray, labels:
     return decompressed_image
 
 
+def get_arguments():
+    parser = argparse.ArgumentParser(description='The K-mean clustering algorithm for image compression')
+    parser.add_argument('--mode', '-m', default='compression',
+                        choices=['compression', 'decompression'],
+                        help='The mode for the algorithm work')
+    parser.add_argument('--input', '-i', default='./input/input_kmean.jpg',
+                        help='The input file path')
+    parser.add_argument('--output', '-o', default='./output/output_kmean.pl',
+                        help='The output file path')
+    parser.add_argument('--clusters', '-k', default=8, choices=[4, 8, 16, 32, 64, 128],
+                        type=int, help='The number of clusters')
+    return vars(parser.parse_args())
+
+
 def main(args):
 
     if args['mode'] == 'compression':
@@ -93,19 +107,6 @@ def main(args):
         print("The selected mode is not valid")
         exit(0)
 
-
-def get_arguments():
-    parser = argparse.ArgumentParser(description='The K-mean clustering algorithm for image compression')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
-                        help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_kmean.jpg',
-                        help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_kmean.pl',
-                        help='The output file path')
-    parser.add_argument('--clusters', '-k', default=8, choices=[4, 8, 16, 32, 64, 128],
-                        type=int, help='The number of clusters')
-    return vars(parser.parse_args())
 
 
 if __name__ == '__main__':

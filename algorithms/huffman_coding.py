@@ -35,7 +35,7 @@ def huffman_code_tree(node, bin_string=''):
     return d
 
 
-def huffman_coding_compression(input_string: str):
+def huffman_coding_compression(input_string: object):
     print("[INFO] Encoding ...")
     # Calculating frequency
     freq = dict(Counter(input_string))
