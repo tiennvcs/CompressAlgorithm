@@ -23,11 +23,11 @@ def get_arguments():
     return vars(parser.parse_args())
 
 
-def compression_ratio(input_image:np.ndarray, encoded_string: str):
+def compression_ratio(input_image: np.ndarray, encoded_string: str):
     print("[INFO] Calculate the needed bits...")
     rows = input_image.shape[0]
     cols = input_image.shape[1]
-    origin_bits = rows*cols*3*8
+    origin_bits = rows * cols * 3 * 8
     encoded_bits = len(encoded_string)
     ratio = origin_bits / encoded_bits
 
@@ -36,8 +36,8 @@ def compression_ratio(input_image:np.ndarray, encoded_string: str):
 
     return ratio
 
-def lossless_JPEG_Compression(image: np.ndarray, predictor):
 
+def lossless_JPEG_Compression(image: np.ndarray, predictor:str):
     print("[INFO] Calculating the prediction matrix ...")
     prediction_matrix = predictors[predictor](image)
 
@@ -48,13 +48,14 @@ def lossless_JPEG_Compression(image: np.ndarray, predictor):
     print("[INFO] Scanning the different matrix ...")
     rows = image.shape[0]
     cols = image.shape[1]
-    number_string = ""
+
+    number_list = []
     for i in range(rows):
         for j in range(cols):
-            number_string += str(different_matrix[i][j]) + " "
+            number_list.append(different_matrix[i][j])
 
     print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
-    huffman_code, encoded_string = huffman_coding_compression(input_string=number_string)
+    huffman_code, encoded_string = huffman_coding_compression(input_string=number_list)
 
     return (image.shape, predictor, huffman_code, encoded_string)
 
@@ -72,7 +73,7 @@ def main(args):
         # Read the image data from disk
         try:
             img = cv2.imread(os.path.abspath(args['input']))
-            #img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         except:
             print("The image is not found")
             exit(0)
@@ -102,8 +103,8 @@ def main(args):
 
         # Read compressed data with pickle format
         with open(args['input'], 'rb') as f:
-            shape, cluster_centers, labels  = pickle.load(f)
-            decompressed_image = k_mean_Decompression(image_shape=shape,cluster_centers=cluster_centers, labels=labels)
+            shape, cluster_centers, labels = pickle.load(f)
+            decompressed_image = k_mean_Decompression(image_shape=shape, cluster_centers=cluster_centers, labels=labels)
             print("[INFO] Display decompressed image...")
             cv2.imshow('The compressed image with {} clusters'.format(len(cluster_centers)), decompressed_image)
             cv2.waitKey(0)
