@@ -2,9 +2,8 @@ import argparse
 import os
 import time
 
+
 """RLC relative function"""
-
-
 def compression_ratio(input_string: str, encoded_string: str):
     b0 = len(input_string)
     b1 = len(encoded_string)
@@ -29,7 +28,7 @@ def rlc_compression(input_string: str):
         time.sleep(0.5)
 
         # Append the current character with number of times it appear
-        result = result + "{}{}".format(input_string[i], count)
+        result = result + "{}:{} ".format(input_string[i], count)
         i += 1
 
     print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
@@ -55,8 +54,6 @@ def rlc_decompression(encoded_string):
     print("[INFO] The decoded string is {}".format(result))
     return result
 
-
-"""Processing Function"""
 
 
 def get_arguments():

@@ -7,19 +7,6 @@ from sklearn.cluster import KMeans
 import pickle
 np.set_printoptions(precision=4)
 
-def get_arguments():
-    parser = argparse.ArgumentParser(description='The K-mean clustering algorithm for image compression')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
-                        help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_kmean.jpg',
-                        help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_kmean.pl',
-                        help='The output file path')
-    parser.add_argument('--clusters', '-k', default=8, choices=[4, 8, 16, 32, 64, 128],
-                        type=int, help='The number of clusters')
-    return vars(parser.parse_args())
-
 
 def compression_ratio(input_image:str, clusters):
     print("[INFO] Calculate the needed bits...")
@@ -105,6 +92,20 @@ def main(args):
     else:
         print("The selected mode is not valid")
         exit(0)
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser(description='The K-mean clustering algorithm for image compression')
+    parser.add_argument('--mode', '-m', default='compression',
+                        choices=['compression', 'decompression'],
+                        help='The mode for the algorithm work')
+    parser.add_argument('--input', '-i', default='./input/input_kmean.jpg',
+                        help='The input file path')
+    parser.add_argument('--output', '-o', default='./output/output_kmean.pl',
+                        help='The output file path')
+    parser.add_argument('--clusters', '-k', default=8, choices=[4, 8, 16, 32, 64, 128],
+                        type=int, help='The number of clusters')
+    return vars(parser.parse_args())
 
 
 if __name__ == '__main__':

@@ -1,12 +1,14 @@
+import os
+import argparse
 
-"""LZW relative function"""
-def rlc_encode(input_string: str, dictionary):
+
+def LZW_compression(input_string: str, dictionary):
     print("\nInput", "Current String", "In dictionary?", "Encoded Output", "Index", sep='\t\t')
     s = ""
     res_string = []
     count = 0
     for i in input_string:
-        if s+i in dictionary:
+        if s + i in dictionary:
             if s == "":
                 ec_out = "nothing"
             else:
@@ -35,13 +37,14 @@ def rlc_encode(input_string: str, dictionary):
             s = i
         count += 1
         print(input_string[0:count], cs, stb, ec_out, index, sep='\t\t')
-    return ec_out
+    return (res_string, dictionary)
 
-def rlc_decode(input_string: str, dictionary):
+
+def LZW_decompression(encoded_string: str, dictionary):
     s = 0
     decode = ""
     count = 0
-    input_copy = [int (x) for x in input_string.split(" ")]
+    input_copy = [int (x) for x in encoded_string.split(" ")]
     cs = dictionary[input_copy[0]]
     print("\nInput", "Current String", "Seen this Before?", "Decoded Output", "Index", sep='\t\t')
     for i in input_copy:
@@ -62,27 +65,56 @@ def rlc_decode(input_string: str, dictionary):
             stb = "no"
             index = len(dictionary) - 1
         count += 1
-        print(input_string[0: count*2], cs, stb, decode, index, sep='\t\t')
+        print(encoded_string[0: count*2], cs, stb, decode, index, sep='\t\t')
     return decode
 
-#input_string = input("Nhap chuoi: ")
-input_string = "banana_bandana"
 
-dictionary = []
-for i in input_string:
-    if i not in dictionary:
-        dictionary.append(i)
-dictionary.sort()
+def get_arguments():
+    parser = argparse.ArgumentParser(description='The Dictionary-based Coding (LZW) algorithms')
+    parser.add_argument('--mode', '-m', default='compression',
+                        choices=['compression', 'decompression'],
+                        help='The mode for the algorithm work')
+    parser.add_argument('--input', '-i', default='./input/input_rlc.txt',
+                        help='The input file path')
+    parser.add_argument('--output', '-o', default='./output/output_rlc.txt',
+                        help='The output file path')
+    return vars(parser.parse_args())
 
-encode = rlc_encode(input_string, dictionary)
+    
+def main(args):
+    if not os.path.isfile(_args['input']):
+        print("The input file is not exist")
+        exit(1)
 
-dictionary = []
-for i in input_string:
-    if i not in dictionary:
-        dictionary.append(i)
-dictionary.sort()
+    # Check the mode
+    if _args['mode'] == 'compression':
+        # Read the text data from file
+        with open(_args['input'], 'r') as f:
+            string = f.read()
+        dictionary = []
+        for i in input_string:
+            if i not in dictionary:
+                dictionary.append(i)
+        dictionary.sort()
 
-decode = rlc_decode(encode, dictionary)
+        dictionary, encoded = LZW_compresion(input_string=string, dictionary=dictionary)
 
-print("\n", encode)
-print("\n", decode)
+        compress_ratio = compression_ratio(input_string=string, encoded_string=result)
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        # Store the output data to disk
+        with open(_args['output'], 'w') as f:
+            f.write(encoed)
+    elif _args['mode'] == 'decompression':
+        with open(args['input'], 'rb') as f:
+            dictionary, encoded_string = pickle.load(f)
+
+        decoded_string  = LZW_decompression(encoded_string=encoded_string, dictionary=dictionary)
+
+    else:
+        print("The selected mode is not valid")
+        exit(0)
+
+
+if __name__ == '__main__':
+    args = get_arguments()
+    main(args)
