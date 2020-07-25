@@ -3,17 +3,6 @@ import os
 import time
 from collections import Counter
 
-def get_arguments():
-    parser = argparse.ArgumentParser(description='The Shannon-Fano algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
-                        help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_shanon-fano.txt',
-                        help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_shanon-fano.txt',
-                        help='The output file path')
-    return vars(parser.parse_args())
-
 
 def shanon_FanoCompression(input_string: str):
 
@@ -49,6 +38,19 @@ def shanon_FanoDecompression(encoded_string):
 
     print("[INFO] The decoded string is {}".format(res_string))
     return res_string
+
+
+def get_arguments():
+    parser = argparse.ArgumentParser(description='The Shannon-Fano algorithms')
+    parser.add_argument('--mode', '-m', default='compression',
+                        choices=['compression', 'decompression'],
+                        help='The mode for the algorithm work')
+    parser.add_argument('--input', '-i', default='./input/input_shanon-fano.txt',
+                        help='The input file path')
+    parser.add_argument('--output', '-o', default='./output/output_shanon-fano.txt',
+                        help='The output file path')
+    return vars(parser.parse_args())
+    
 
 def main(args):
     # Check the input path is exis whether or not
