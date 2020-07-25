@@ -93,8 +93,6 @@ def compression_ratio(input_string:str, encoded_string:str):
     return b0 / b1
 
 
-#
-
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='The Huffman Coding algorithms')
