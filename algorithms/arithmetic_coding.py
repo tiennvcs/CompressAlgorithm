@@ -134,7 +134,7 @@ def arithmetic_Decompression(code: str, table):
 
 def compression_ratio(input_string: str, code: float, table: dict):
     b0 = sys.getsizeof(input_string) * 8   # bits
-    b1 = len(code) + sys.getsizeof(table) * 8  # bits
+    b1 = len(code) + len(table) * 40  # bits
     print("The need origin bits: {}".format(b0))
     print("The need encoded bits: {}".format(b1))
     return b0 / b1
