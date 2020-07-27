@@ -54,6 +54,7 @@ def get_probability_table(infomation_source):
 
     return table
 
+
 def print_probability_table(table):
     print("The probability table of each symbol.")
     print("|{:<10}|{:<30}|".format("Symbol", "Range"))
@@ -61,6 +62,7 @@ def print_probability_table(table):
     for key in table:
         print(r"""|{:<10}|{:<30}|""".format(str(key), "[{}, {})".format(round(table[key][0], 10), round(table[key][1], 10))))
     print("-"*43)
+
 
 def aritmetic_Compression(input_string: str, probability_table):
 
@@ -86,11 +88,11 @@ def aritmetic_Compression(input_string: str, probability_table):
     # Get the middle value in range [low, high] to encode
     value = round(low + (high-low)/2, 10)
     print("[INFO] The value encoded: {}".format(value))
-    time.sleep(2)
+    time.sleep(1)
 
     bin_value = "0." + float_bin(value)
     print("[INFO] The binary representation of bellow value: {}".format(bin_value))
-    time.sleep(2)
+    time.sleep(1)
 
     return bin_value
 
@@ -122,7 +124,7 @@ def arithmetic_Decompression(code: str, table):
         range = round(high - low, 10)
 
         print("{:<12}|{:<20}|{:<20}|{:<20}|{:<20}".format(value, symbol, low, high, range))
-        time.sleep(2)
+        time.sleep(0.2)
 
         res += symbol
 

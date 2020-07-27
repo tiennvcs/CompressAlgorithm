@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-12 12 12 24 30 30 0 0 0 12 22 22 22 10 10
-=======
 don't worry if you don't understand this, there are good libraries to solve these problems - andrew ng =)
->>>>>>> 2d6bb01d626929bc7762202b754db56af0a940d5
