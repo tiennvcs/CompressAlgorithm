@@ -4,6 +4,7 @@ from algorithms.huffman_coding import huffman_coding_compression
 from algorithms.k_mean_clustering import k_mean_Compression
 from algorithms.lossless_jpeg import lossless_JPEG_Compression
 from algorithms.lzw import LZW_compression
+from algorithms.rlc import rlc_compression
 from algorithms.shannon_fano import shanon_FanoCompression
 
 # Import decoder
@@ -12,9 +13,15 @@ from algorithms.huffman_coding import huffman_coding_decompression
 from algorithms.k_mean_clustering import k_mean_Decompression
 from algorithms.lossless_jpeg import lossless_JPEG_Decompression
 from algorithms.lzw import LZW_decompression
+from algorithms.rlc import rlc_decompression
 from algorithms.shannon_fano import shanon_FanoDecompression
 
+
 algorithms = {
+    'rlc': {
+        'encoder': rlc_compression,
+        'decoder': rlc_decompression,
+    },
     'adaptive_huffman': {
         'encoder': adaptive_huffman_compression,
         'decoder': adaptive_huffman_decompression,
