@@ -133,7 +133,6 @@ def main(_args):
         with open(_args['input'], 'rb') as f:
             (huffman_code, encoded_string) = pickle.load(f)
         huffman_coding_decompression(huffman_code=huffman_code, encoded_string=encoded_string)
-
     else:
         print("The selected mode is not valid")
         exit(0)

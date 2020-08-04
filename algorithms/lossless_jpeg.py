@@ -4,8 +4,8 @@ import time
 import numpy as np
 import cv2
 import pickle
-from jpeg_utils import predictors
-from huffman_coding import huffman_coding_compression, huffman_coding_decompression
+from .jpeg_utils import predictors
+from .huffman_coding import huffman_coding_compression, huffman_coding_decompression
 
 
 def get_arguments():
@@ -68,8 +68,6 @@ def lossless_JPEG_Decompression(predictor: str, huffman_code: dict, encoded_huff
     print("[INFO] Decompressing the encoded by Huffman decompressor ...")
 
     #
-
-
 def main(args):
     if args['mode'] == 'compression':
         # Read the image data from disk
