@@ -1,65 +1,74 @@
 import argparse
 import os
 import time
+from .base import Base
 
 
-"""RLC relative function"""
-def compression_ratio(input_string: str, encoded_string: str):
-    b0 = len(input_string)
-    b1 = len(encoded_string)
-    return b0 / b1
+class RLC(Base):
 
+    def __init__(self):
+        self.name = "Run length Coding"
 
-def rlc_compression(input_string: str):
-    print("[INFO] The string need encode is \n\t{}".format(input_string))
-    result = str()
-    i = 0
+    def compress(self, input:str):
 
-    print("[INFO] Encoding ...")
-    while i < len(input_string) - 1:
+        input_string = input
+        print("[INFO] The string need encode is \n\t{}".format(input_string))
+        result = str()
+        i = 0
 
-        # Count the occurrence of current word
-        count = 1
-        while i < len(input_string) and input_string[i] == input_string[i + 1]:
-            count += 1
+        print("[INFO] Encoding ...")
+        while i < len(input_string) - 1:
+
+            # Count the occurrence of current word
+            count = 1
+            while i < len(input_string) and input_string[i] == input_string[i + 1]:
+                count += 1
+                i += 1
+
+            print("\t- {} occur {} times continuous..".format(input_string[i], count))
+            time.sleep(0.01)
+
+            # Append the current character with number of times it appear
+            result = result + "{}:{} ".format(input_string[i], count)
             i += 1
 
-        print("\t- {} occur {} times continuous..".format(input_string[i], count))
-        time.sleep(0.5)
-
-        # Append the current character with number of times it appear
-        result = result + "{}:{} ".format(input_string[i], count)
-        i += 1
-
-    print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
-    return result
+        print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
+        return result
 
 
-def rlc_decompression(encoded_string):
-    print("[INFO] The string need decoded is\n{}".format(encoded_string))
-    count_characters = encoded_string.split("\n")
+    def decompress(self, encoded):
 
-    result = ''
-    print("[INFO] Decoding ...")
-    for character in count_characters:
-        if character == "":
-            continue
-        (c, count) = character.split(":")
+        encoded_string = encoded
 
-        result += c * int(count)
+        print("[INFO] The string need decoded is\n{}".format(encoded_string))
+        count_characters = encoded_string.split(" ")
+        result = ''
+        print("[INFO] Decoding ...")
+        for character in count_characters:
+            if character == "":
+                continue
+            (c, count) = character.split(":")
 
-        print("\tDecoded ...{}".format(c * int(count)))
-        time.sleep(1)
+            result += c * int(count)
 
-    print("[INFO] The decoded string is {}".format(result))
-    return result
+            print("\tDecoded ...{}".format(c * int(count)))
+            time.sleep(0.01)
 
+        print("[INFO] The decoded string is {}".format(result))
+        return result
+
+
+    def calculate_compression_ratio(self, input: str, encoded: str):
+
+        b0 = len(input)
+        b1 = len(encoded)
+        return b0 / b1
 
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='The Run Length Coding algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
+    parser.add_argument('--mode', '-m', default='compress',
+                        choices=['compress', 'decompress'],
                         help='The mode for the algorithm work')
     parser.add_argument('--input', '-i', default='./input/input_rlc.txt',
                         help='The input file path')
@@ -77,16 +86,17 @@ def main(_args):
     with open(_args['input'], 'r') as f:
         string = f.read()
     # Check the mode
-    if _args['mode'] == 'compression':
-        result = rlc_compression(input_string=string)
-        compress_ratio = compression_ratio(input_string=string, encoded_string=result)
+    rlc = RLC()
+    if _args['mode'] == 'compress':
+        result = rlc.compress(input_string=string)
+        compress_ratio = rlc.calculate_compression_ratio(input_string=string, encoded_string=result)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
         with open(_args['output'], 'w') as f:
             f.write(result)
 
-    elif _args['mode'] == 'decompression':
-        rlc_decompression(string)
+    elif _args['mode'] == 'decompress':
+        rlc.decompress(string)
     else:
         print("The selected mode is not valid")
         exit(0)

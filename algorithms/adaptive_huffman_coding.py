@@ -1,11 +1,9 @@
 import argparse
 import os
+from .base import Base
+from .utils import get_arguments
 
 
-"""Adaptive Huffman coding relative function"""
-
-
-# Creating tree nodes
 class NodeTree(object):
     def __init__(self, parent=None, left=None, right=None, weight=0, symbol=''):
         self.parent = parent
@@ -108,81 +106,73 @@ def get_symbol_by_ascii(bin_str):
     return chr(int(bin_str, 2))
 
 
-def adaptive_huffman_compression(text):
-    NYT = NodeTree(symbol="NYT")
-    root = NYT
-    nodes = []
-    seen = [None] * 256
+class HuffmanCodingAdaptive(Base):
+    def __init__(self):
+        self.name = "Adaptive Huffman Coding"
 
-    print("[INFO] Encoding ...")
+    def compress(self, input):
 
-    result = ''
-    for c in text:
-        if seen[ord(c)]:
-            result += get_code(c, root)
-        else:
-            result += get_code('NYT', root)
-            result += bin(ord(c))[2:].zfill(8)
-        # insert and update tree
-        NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, c)
+        text = input
+        NYT = NodeTree(symbol="NYT")
+        root = NYT
+        nodes = []
+        seen = [None] * 256
 
-    print("--> The encoded with code is {}".format({result}))
-    return result
+        print("[INFO] Encoding ...")
 
+        result = ''
+        for c in text:
+            if seen[ord(c)]:
+                result += get_code(c, root)
+            else:
+                result += get_code('NYT', root)
+                result += bin(ord(c))[2:].zfill(8)
+            # insert and update tree
+            NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, c)
 
-def adaptive_huffman_decompression(text):
-    print("[INFO] Decompressing ...")
-    result = ''
-    symbol = get_symbol_by_ascii(text[:8])
-    result += symbol
-
-    NYT = NodeTree(symbol="NYT")
-    root = NYT
-    nodes = []
-    seen = [None] * 256
-
-    NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, symbol)
-    node = root
-
-    i = 8
-    while i < len(text):
-        node = node.left if text[i] == '0' else node.right
-        symbol = node.symbol
-
-        if symbol:
-            if symbol == 'NYT':
-                symbol = get_symbol_by_ascii(text[i + 1:i + 9])
-                i += 8
-
-            result += symbol
-            NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, symbol)
-            node = root
-
-        i += 1
-
-    print("--> The decoded with code is {}".format({result}))
-    return result
+        print("--> The encoded with code is {}".format({result}))
+        return result
 
 
-def compression_ratio(input_string: str, encoded_string: str):
-    b0 = len(input_string) * 8
-    b1 = len(encoded_string)
-    return b0 / b1
+    def decompress(self, encoded):
+        text = encoded
+        print("[INFO] Decompressing ...")
+        result = ''
+        symbol = get_symbol_by_ascii(text[:8])
+        result += symbol
+
+        NYT = NodeTree(symbol="NYT")
+        root = NYT
+        nodes = []
+        seen = [None] * 256
+
+        NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, symbol)
+        node = root
+
+        i = 8
+        while i < len(text):
+            node = node.left if text[i] == '0' else node.right
+            symbol = node.symbol
+
+            if symbol:
+                if symbol == 'NYT':
+                    symbol = get_symbol_by_ascii(text[i + 1:i + 9])
+                    i += 8
+
+                result += symbol
+                NYT, root, nodes, seen = insert_element(NYT, root, nodes, seen, symbol)
+                node = root
+
+            i += 1
+
+        print("--> The decoded with code is {}".format({result}))
+        return result
 
 
-"""Processing Function"""
-
-
-def get_arguments():
-    parser = argparse.ArgumentParser(description='Adaptive Huffman Coding algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
-                        help='The mode for the algorithm work')
-    parser.add_argument('--input', '-i', default='./input/input_adaptive_huffman.txt',
-                        help='The input file path')
-    parser.add_argument('--output', '-o', default='./output/output_adaptive_huffman.txt',
-                        help='The output file path')
-    return vars(parser.parse_args())
+    def calculate_compression_ratio(self, input: str, encoded: str):
+        b0 = len(input) * 8
+        b1 = len(encoded)
+        return b0 / b1
 
 
 def main(_args):
@@ -191,27 +181,26 @@ def main(_args):
         print("The input file is not exist")
         exit(1)
 
+    Adap_huffman = HuffmanCodingAdaptive()
     # Check the mode
-    if _args['mode'] == 'compression':
+    if _args['mode'] == 'compress':
 
         # Read the text data from file
         with open(_args['input'], 'r') as fi:
             input_string = fi.read()
 
-        result = adaptive_huffman_compression(input_string)
-        compress_ratio = compression_ratio(input_string, result)
+        result = Adap_huffman.compress(input_string)
+        compress_ratio = Adap_huffman.calculate_compression_ratio(input_string, result)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
-        with open(_args['output'], 'w') as fi:
+        with open(os.path.join(_args['output'], 'output_adaptive_huffman.txt'), 'w') as fi:
             fi.write(result)
 
-    elif _args['mode'] == 'decompression':
-
+    elif _args['mode'] == 'decompress':
         # Read the text data from file
-        with open(_args['output'], 'r') as fo:
+        with open(_args['input'], 'r') as fo:
             input_string = fo.read()
-
-        adaptive_huffman_decompression(input_string)
+        Adap_huffman.decompress(input_string)
     else:
         print("The selected mode is not valid")
         exit(0)

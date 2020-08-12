@@ -2,12 +2,8 @@ import argparse
 import os
 from collections import Counter
 import pickle
+from .base import Base
 
-
-"""Huffman coding relative function"""
-
-
-# Creating tree nodes
 class NodeTree(object):
 
     def __init__(self, left=None, right=None):
@@ -31,77 +27,81 @@ def huffman_code_tree(node, bin_string=''):
     d = dict()
     d.update(huffman_code_tree(l, bin_string + '0'))
     d.update(huffman_code_tree(r, bin_string + '1'))
-
     return d
 
 
-def huffman_coding_compression(input_string: object):
-    print("[INFO] Encoding ...")
-    # Calculating frequency
-    freq = dict(Counter(input_string))
-    freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
-    nodes = freq
+class HuffmanCoding(Base):
 
-    while len(nodes) > 1:
-        (key1, c1) = nodes[-1]
-        (key2, c2) = nodes[-2]
-        nodes = nodes[:-2]
-        node = NodeTree(key1, key2)
-        nodes.append((node, c1 + c2))
-        nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
+    def __init__(self):
+        self.name = "Huffman Coding"
 
-    huffman_code = huffman_code_tree(nodes[0][0])
+    def compress(self, input: object):
 
-    output_freq = ' Char | Huffman code \n'
-    for (char, frequency) in freq:
-        output_freq = output_freq + ('%r | %s' % (char, huffman_code[char])) + '\n'
-    encoded_string = ''
-    for char in input_string:
-        encoded_string += huffman_code[char]
+        input_string = input
+        print("[INFO] Encoding ...")
+        # Calculating frequency
+        freq = dict(Counter(input_string))
+        freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+        nodes = freq
 
-    print(output_freq)
+        while len(nodes) > 1:
+            (key1, c1) = nodes[-1]
+            (key2, c2) = nodes[-2]
+            nodes = nodes[:-2]
+            node = NodeTree(key1, key2)
+            nodes.append((node, c1 + c2))
+            nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
 
-    print("--> The encoded with code is {}".format({encoded_string}))
-    return huffman_code, encoded_string
+        huffman_code = huffman_code_tree(nodes[0][0])
 
+        output_freq = ' Char | Huffman code \n'
+        for (char, frequency) in freq:
+            output_freq = output_freq + ('%r | %s' % (char, huffman_code[char])) + '\n'
+        encoded_string = ''
+        for char in input_string:
+            encoded_string += huffman_code[char]
 
-def huffman_coding_decompression(huffman_code: dict, encoded_string: str, type_input="str"):
-    print("[INFO] Decompressing ...")
-    key_list = list(huffman_code.keys())
-    val_list = list(huffman_code.values())
-    s = ''
-    if type_input == "str":
-        result = ''
-        for char in encoded_string:
-            s += char
-            if s in val_list:
-                result += str(key_list[val_list.index(s)])
-                s = ''
-    else:
-        result = []
-        for char in encoded_string:
-            s += char
-            if s in val_list:
-                result.append(key_list[val_list.index(s)])
-                s = ''
+        print(output_freq)
 
-    print("--> The decoded with code is {}".format({result}))
-    return result
+        print("--> The encoded with code is {}".format({encoded_string}))
+        return huffman_code, encoded_string
 
 
-def compression_ratio(input_string: str, encoded_string: str):
-    b0 = len(input_string) * 8
-    b1 = len(encoded_string)
-    return b0 / b1
+    def decompress(self, encoded: str, huffman_code: dict, type_input="str"):
+        encoded_string = encoded
+        print("[INFO] Decompressing ...")
+        key_list = list(huffman_code.keys())
+        val_list = list(huffman_code.values())
+        s = ''
+        if type_input == "str":
+            result = ''
+            for char in encoded_string:
+                s += char
+                if s in val_list:
+                    result += str(key_list[val_list.index(s)])
+                    s = ''
+        else:
+            result = []
+            for char in encoded_string:
+                s += char
+                if s in val_list:
+                    result.append(key_list[val_list.index(s)])
+                    s = ''
+
+        print("--> The decoded with code is {}".format({result}))
+        return result
 
 
-"""Processing Function"""
+    def calculate_compression_ratio(self, input: str, encoded: str):
+        b0 = len(input) * 8
+        b1 = len(encoded)
+        return b0 / b1
 
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='The Huffman Coding algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
+    parser.add_argument('--mode', '-m', default='compress',
+                        choices=['compress', 'decompress'],
                         help='The mode for the algorithm work')
     parser.add_argument('--input', '-i', default='./input/input_huffman.txt',
                         help='The input file path')
@@ -116,23 +116,27 @@ def main(_args):
         print("The input file is not exist")
         exit(1)
 
-    if _args['mode'] == 'compression':
+    huffman = HuffmanCoding()
+
+    if _args['mode'] == 'compress':
         # Read the text data from file
         with open(_args['input'], 'r') as f:
             string = f.read()
 
-        (huffman_code, encoded_string) = huffman_coding_compression(input_string=string)
-
-        compress_ratio = compression_ratio(input_string=string, encoded_string=encoded_string)
+        (huffman_code, encoded_string) = huffman.compress(input=string)
+        compress_ratio = huffman.calculate_compression_ratio(input=string, encoded=encoded_string)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
         with open(_args['output'], 'wb') as f:
             pickle.dump((huffman_code, encoded_string), f)
 
-    elif _args['mode'] == 'decompression':
+    elif _args['mode'] == 'decompress':
         with open(_args['input'], 'rb') as f:
             (huffman_code, encoded_string) = pickle.load(f)
-        huffman_coding_decompression(huffman_code=huffman_code, encoded_string=encoded_string)
+            print(huffman_code)
+            print(encoded_string)
+            input()
+        huffman.decompress(encoded=encoded_string, huffman_code=huffman_code)
     else:
         print("The selected mode is not valid")
         exit(0)
