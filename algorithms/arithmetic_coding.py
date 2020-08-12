@@ -4,7 +4,7 @@ import pickle
 import string
 import sys
 import time
-
+from base import Base
 
 TERMINATOR = "$"
 
@@ -64,91 +64,91 @@ def print_probability_table(table):
     print("-"*43)
 
 
-def aritmetic_Compression(input_string: str, probability_table):
+class Arithmetic(Base):
 
-    print("[INFO] Compressing ...")
-    low = 0.0
-    high = 1.0
-    range = 1.0
+    def __init__(self):
+        self.name = "Arithmetic coding"
 
-    print("{:>10}|{:>20}|{:>20}|{:>20}".format("Symbol", "Low", "High", "Range"))
-    print("-"*73)
+    def compress(input_string: str, probability_table):
 
-    for symbol in input_string:
-        new_low = low + range * probability_table[symbol][0]
-        new_high = low + range * probability_table[symbol][1]
+        print("[INFO] Compressing ...")
+        low = 0.0
+        high = 1.0
+        range = 1.0
 
-        low = round(new_low, 10)
-        high = round(new_high, 10)
-        range = round(high - low, 10)
-        print("{:>10}|{:>20}|{:>20}|{:>20}".format(symbol, low, high, range))
+        print("{:>10}|{:>20}|{:>20}|{:>20}".format("Symbol", "Low", "High", "Range"))
+        print("-"*73)
 
-    print("-"*73)
+        for symbol in input_string:
+            new_low = low + range * probability_table[symbol][0]
+            new_high = low + range * probability_table[symbol][1]
 
-    # Get the middle value in range [low, high] to encode
-    value = round(low + (high-low)/2, 10)
-    print("[INFO] The value encoded: {}".format(value))
-    time.sleep(1)
+            low = round(new_low, 10)
+            high = round(new_high, 10)
+            range = round(high - low, 10)
+            print("{:>10}|{:>20}|{:>20}|{:>20}".format(symbol, low, high, range))
 
-    bin_value = "0." + float_bin(value)
-    print("[INFO] The binary representation of bellow value: {}".format(bin_value))
-    time.sleep(1)
+        print("-"*73)
 
-    return bin_value
+        # Get the middle value in range [low, high] to encode
+        value = round(low + (high-low)/2, 10)
+        print("[INFO] The value encoded: {}".format(value))
+        time.sleep(1)
 
+        bin_value = "0." + float_bin(value)
+        print("[INFO] The binary representation of bellow value: {}".format(bin_value))
+        time.sleep(1)
 
-def arithmetic_Decompression(code: str, table):
-
-    value = round(bin_float(code), 10)
-    print("[INFO] The value decoded from the binary string: {}".format(value))
-
-    low = 0
-    high = 1.0
-    range = 1.0
-    res = ""
-    symbol = ""
-    print("[INFO] Decompresing ...\n")
-
-    print("{:<12}|{:<20}|{:<20}|{:<20}|{:<20}".format("Value", "Output symbol", "Low", "High", "Range"))
-    print("-"*92)
-
-    while symbol != TERMINATOR:
-
-        # Find the symbol s that probability_table[s][0] <= code < probability_table[s][1]
-        for key in table:
-            if table[key][0] <= value < table[key][1]:
-                symbol = key
-                break
-        low = round(table[symbol][0],10)
-        high = round(table[symbol][1], 10)
-        range = round(high - low, 10)
-
-        print("{:<12}|{:<20}|{:<20}|{:<20}|{:<20}".format(value, symbol, low, high, range))
-        time.sleep(0.2)
-
-        res += symbol
-
-        value = round((value - low) / range, 10)
-
-    print("-"*92)
-    return res
+        return bin_value
 
 
-def compression_ratio(input_string: str, code: float, table: dict):
-    b0 = sys.getsizeof(input_string) * 8   # bits
-    b1 = len(code) + len(table) * 40  # bits
-    print("The need origin bits: {}".format(b0))
-    print("The need encoded bits: {}".format(b1))
-    return b0 / b1
+    def decopmress(code: str, table):
+
+        value = round(bin_float(code), 10)
+        print("[INFO] The value decoded from the binary string: {}".format(value))
+
+        low = 0
+        high = 1.0
+        range = 1.0
+        res = ""
+        symbol = ""
+        print("[INFO] Decompresing ...\n")
+
+        print("{:<12}|{:<20}|{:<20}|{:<20}|{:<20}".format("Value", "Output symbol", "Low", "High", "Range"))
+        print("-"*92)
+
+        while symbol != TERMINATOR:
+
+            # Find the symbol s that probability_table[s][0] <= code < probability_table[s][1]
+            for key in table:
+                if table[key][0] <= value < table[key][1]:
+                    symbol = key
+                    break
+            low = round(table[symbol][0],10)
+            high = round(table[symbol][1], 10)
+            range = round(high - low, 10)
+
+            print("{:<12}|{:<20}|{:<20}|{:<20}|{:<20}".format(value, symbol, low, high, range))
+            time.sleep(0.2)
+
+            res += symbol
+
+            value = round((value - low) / range, 10)
+
+        print("-"*92)
+        return res
 
 
-"""Processing Function"""
+    def calculate_compression_ratio(input_string: str, code: float, table: dict):
+        b0 = sys.getsizeof(input_string) * 8   # bits
+        b1 = len(code) + len(table) * 40  # bits
+        return b0 / b1
 
 
 def get_arguments():
     parser = argparse.ArgumentParser(description='The Aritmetic compression algorithms')
-    parser.add_argument('--mode', '-m', default='compression',
-                        choices=['compression', 'decompression'],
+    parser.add_argument('--mode', '-m', default='compress',
+                        choices=['compress', 'decompress'],
                         help='The mode for the algorithm work')
     parser.add_argument('--input', '-i', default='./input/input_arithmetic.txt',
                         help='The input file path')
@@ -163,7 +163,9 @@ def main(_args):
         print("The input file is not exist")
         exit(1)
 
-    if _args['mode'] == 'compression':
+    arithmetic = Arithmetic()
+
+    if _args['mode'] == 'compress':
         # Read the text data from file
         with open(_args['input'], 'r') as f:
             string = f.read().rstrip("\n")
@@ -173,19 +175,20 @@ def main(_args):
         probability_table = get_probability_table(string)
         print_probability_table(table=probability_table)
 
-        code = aritmetic_Compression(input_string=string, probability_table=probability_table)
+        code = arithmetic.compress(input_string=string, probability_table=probability_table)
 
-        compress_ratio = compression_ratio(input_string=string, code=code, table=probability_table)
+        compress_ratio = arithmetic.calculate_compression_ratio(input=string, code=code, table=probability_table)
+
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
         with open(_args['output'], 'wb') as f:
             pickle.dump((code, probability_table), f)
 
-    elif _args['mode'] == 'decompression':
+    elif _args['mode'] == 'decompress':
         with open(_args['input'], 'rb') as f:
             (code, probability_table) = pickle.load(f)
         print("The encoded binary string: {}".format(code))
-        decoded_string = arithmetic_Decompression(code=code, table=probability_table)
+        decoded_string = arithmetic.decompress(code=code, table=probability_table)
         print("[INFO] The decoded string: {}".format(decoded_string))
     else:
         print("The selected mode is not valid")

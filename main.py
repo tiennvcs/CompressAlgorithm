@@ -36,8 +36,8 @@ def main(args):
         data = read_data(args['input'])
         encoded_string = algorithm.compress(input=data)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded_string)
-        print("The compression ratio is {}".format(compress_ratio))
-        input("Encoded the input data ... Press any key to decomress the encoded data ...")
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(encoded=encoded_string)
 
 
