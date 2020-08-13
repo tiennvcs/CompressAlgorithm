@@ -4,7 +4,7 @@ import pickle
 import string
 import sys
 import time
-from base import Base
+from .base import Base
 
 TERMINATOR = "$"
 
@@ -69,8 +69,9 @@ class Arithmetic(Base):
     def __init__(self):
         self.name = "Arithmetic coding"
 
-    def compress(input_string: str, probability_table):
+    def compress(self, input: str, probability_table):
 
+        input_string = input
         print("[INFO] Compressing ...")
         low = 0.0
         high = 1.0
@@ -102,9 +103,9 @@ class Arithmetic(Base):
         return bin_value
 
 
-    def decopmress(code: str, table):
+    def decompress(self, encoded: str, table):
 
-        value = round(bin_float(code), 10)
+        value = round(bin_float(encoded), 10)
         print("[INFO] The value decoded from the binary string: {}".format(value))
 
         low = 0
@@ -139,9 +140,9 @@ class Arithmetic(Base):
         return res
 
 
-    def calculate_compression_ratio(input_string: str, code: float, table: dict):
-        b0 = sys.getsizeof(input_string) * 8   # bits
-        b1 = len(code) + len(table) * 40  # bits
+    def calculate_compression_ratio(self, input: str, encoded: float, table: dict):
+        b0 = sys.getsizeof(input) * 8   # bits
+        b1 = len(encoded) + len(table) * 40  # bits
         return b0 / b1
 
 
@@ -175,20 +176,20 @@ def main(_args):
         probability_table = get_probability_table(string)
         print_probability_table(table=probability_table)
 
-        code = arithmetic.compress(input_string=string, probability_table=probability_table)
+        encoded = arithmetic.compress(input=string, probability_table=probability_table)
 
-        compress_ratio = arithmetic.calculate_compression_ratio(input=string, code=code, table=probability_table)
+        compress_ratio = arithmetic.calculate_compression_ratio(input=string, encoded=encoded, table=probability_table)
 
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
         with open(_args['output'], 'wb') as f:
-            pickle.dump((code, probability_table), f)
+            pickle.dump((encoded, probability_table), f)
 
     elif _args['mode'] == 'decompress':
         with open(_args['input'], 'rb') as f:
-            (code, probability_table) = pickle.load(f)
-        print("The encoded binary string: {}".format(code))
-        decoded_string = arithmetic.decompress(code=code, table=probability_table)
+            (encoded, probability_table) = pickle.load(f)
+        print("The encoded binary string: {}".format(encoded))
+        decoded_string = arithmetic.decompress(encoded=str(encoded), table=probability_table)
         print("[INFO] The decoded string: {}".format(decoded_string))
     else:
         print("The selected mode is not valid")

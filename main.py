@@ -2,7 +2,9 @@
 import numpy as np
 from config import algorithms
 from utils import get_arguments, read_data
+from algorithms.arithmetic_coding import get_probability_table, print_probability_table, TERMINATOR
 import os
+import cv2
 
 
 def main(args):
@@ -40,6 +42,37 @@ def main(args):
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(encoded=encoded_string)
 
+    elif args['algorithm'] == 'arithmetic':
+        data = read_data(args['input'])
+        string = data.rstrip("\n") + TERMINATOR
+        probability_table = get_probability_table(string)
+        print_probability_table(table=probability_table)
+        encoded = algorithm.compress(input=string, probability_table=probability_table)
+        compress_ratio = algorithm.calculate_compression_ratio(input=string, encoded=encoded, table=probability_table)
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        new_data = algorithm.decompress(encoded=encoded, table=probability_table)
+        print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
+
+    elif args['algorithm'] == 'jpeg_lossless':
+        try:
+            img = cv2.imread(os.path.abspath(args['input']))
+        except:
+            print("The image is not found")
+            exit(0)
+
+        cv2.imshow('The origin image', img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+        #encoded = algorithm.compress(input=string, probability_table=probability_table)
+        (shape, predictor, huffman_code, encoded) = algorithm.compress(
+                                                        input=img, predictor=args['predictor'])
+        compress_ratio = algorithm.calculate_compression_ratio(input=img, encoded=encoded)
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        
+        #new_data = algorithm.decompress(encoded=encoded, table=probability_table)
 
 if __name__ == '__main__':
     args = get_arguments()
