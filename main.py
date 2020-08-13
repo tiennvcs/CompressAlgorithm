@@ -60,7 +60,6 @@ def main(args):
         except:
             print("The image is not found")
             exit(0)
-
         cv2.imshow('The origin image', img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
@@ -71,8 +70,7 @@ def main(args):
         compress_ratio = algorithm.calculate_compression_ratio(input=img, encoded=encoded)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        
-        #new_data = algorithm.decompress(encoded=encoded, table=probability_table)
+        new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
 
 if __name__ == '__main__':
     args = get_arguments()

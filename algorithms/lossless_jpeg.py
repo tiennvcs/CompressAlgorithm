@@ -20,9 +20,8 @@ class Lossless_JPEG(Base):
 
         print("[INFO] Calculating the prediction matrix ...")
         prediction_matrix = predictors[predictor](image)
-
         print("[INFO] Calculating the different matrix ...")
-        different_matrix = np.abs(image - prediction_matrix)
+        different_matrix = image - prediction_matrix
 
         # Scan the different_matrix follow the zigzag and use Huffman algorithm to encode
         print("[INFO] Scanning the different matrix ...")
@@ -34,11 +33,10 @@ class Lossless_JPEG(Base):
                 number_list.append(float(different_matrix[i][j][0]))
                 number_list.append(float(different_matrix[i][j][1]))
                 number_list.append(float(different_matrix[i][j][2]))
-        print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
 
+        print("[INFO] Encoding the string of number by Huffman coding algorithm ...")
         huffman = HuffmanCoding()
         huffman_code, encoded_string = huffman.compress(input=number_list)
-
         return (image.shape, predictor, huffman_code, encoded_string)
 
 
@@ -46,7 +44,20 @@ class Lossless_JPEG(Base):
 
         # Huffman decoder
         print("[INFO] Decompressing the encoded by Huffman decompressor ...")
-        
+        huffman = HuffmanCoding()
+        number_list = huffman.decompress(huffman_code=huffman_code, encoded=encoded, type_input="list")
+
+        print("[INFO] Scaning the decoded list to construct the different matrix ...")
+        different_matrix = np.empty(shape)
+        rows = shape[0]
+        cols = shape[1]
+        count = 0
+        for i in range(rows):
+            for j in range(cols):
+                different_matrix[i][j][0] = float(number_list[count])
+                count += 1
+
+        print("[INFO] ")
 
 
 

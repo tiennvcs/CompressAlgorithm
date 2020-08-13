@@ -88,7 +88,7 @@ class HuffmanCoding(Base):
                     result.append(key_list[val_list.index(s)])
                     s = ''
 
-        print("--> The decoded with code is {}".format({result}))
+        print("--> The decoded with code is {}".format(result))
         return result
 
 
