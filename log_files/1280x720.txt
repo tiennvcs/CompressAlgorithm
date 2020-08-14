@@ -1,0 +1,61 @@
+2.02
+2.79
+1.74
+3.57
+1.29
+2.42
+3.3
+1.68
+1.43
+1.39
+3
+1.98
+2.84
+2.82
+2.45
+1.16
+3.87
+1.66
+3.41
+2.4
+
+--------------------------
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image1.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image2.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image3.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image4.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image5.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image6.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image7.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image8.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image9.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image10.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image11.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image12.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image13.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image14.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image15.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image16.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image17.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image18.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image19.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1280x720/image20.jpg

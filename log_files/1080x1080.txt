@@ -1,0 +1,42 @@
+
+----------------------------------
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image1.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image2.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image3.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image4.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image5.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image6.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image7.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image8.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image9.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image10.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image11.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image12.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image13.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image14.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image15.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image16.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image17.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image18.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image19.jpg
+e
+python main.py -al jpeg_lossless -i experiments/image/1080x1080/image20.jpg
+e
