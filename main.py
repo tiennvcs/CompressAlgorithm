@@ -52,7 +52,7 @@ def main(args):
         dictionary, encoded = algorithm.compress(input=data, dictionary=dictionary)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded, dictionary=dictionary)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
-        
+
     elif args['algorithm'] == 'arithmetic':
         data = read_data(args['input'])
         string = data.rstrip("\n") + TERMINATOR
@@ -61,9 +61,9 @@ def main(args):
         encoded = algorithm.compress(input=string, probability_table=probability_table)
         compress_ratio = algorithm.calculate_compression_ratio(input=string, encoded=encoded, table=probability_table)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
-        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        new_data = algorithm.decompress(encoded=encoded, table=probability_table)
-        print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
+        #input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        #new_data = algorithm.decompress(encoded=encoded, table=probability_table)
+        #print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
 
     elif args['algorithm'] == 'jpeg_lossless':
         try:

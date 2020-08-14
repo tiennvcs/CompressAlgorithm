@@ -87,7 +87,7 @@ class Arithmetic(Base):
             low = round(new_low, 10)
             high = round(new_high, 10)
             range = round(high - low, 10)
-            print("{:>10}|{:>20}|{:>20}|{:>20}".format(symbol, low, high, range))
+            #print("{:>10}|{:>20}|{:>20}|{:>20}".format(symbol, low, high, range))
 
         print("-"*73)
 
