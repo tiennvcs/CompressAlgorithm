@@ -14,7 +14,7 @@ def read_data(path_file):
 def get_arguments():
     parser = argparse.ArgumentParser(description='The compression algorithms')
     parser.add_argument('--algorithm', '-al', required=True,
-                        choices=["rlc", "huffman", "huffman_adap", "arithmetic", "jpeg_lossless", "kmean"],
+                        choices=["rlc", "lzw", "huffman", "huffman_adap", "arithmetic", "jpeg_lossless", "kmean"],
                         help='The compression algorithm')
     parser.add_argument('--input', '-i', required=True,
                         help='The input file path')

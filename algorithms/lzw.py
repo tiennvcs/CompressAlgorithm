@@ -1,6 +1,6 @@
 import os
 import argparse
-from base import Base
+from .base import Base
 import pickle
 
 
@@ -45,7 +45,7 @@ class LZW(Base):
                 index = len(dictionary)-1
                 s = i
             count += 1
-            print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format(input_string[0:count], cs, stb, ec_out, index))
+            #print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format(input_string[0:count], cs, stb, ec_out, index))
 
         return (res_string, dictionary)
 

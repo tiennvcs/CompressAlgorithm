@@ -42,6 +42,17 @@ def main(args):
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(encoded=encoded_string)
 
+    elif args['algorithm'] == 'lzw':
+        data = read_data(args['input'])
+        dictionary = []
+        for i in data:
+            if i not in dictionary:
+                dictionary.append(i)
+        dictionary.sort()
+        dictionary, encoded = algorithm.compress(input=data, dictionary=dictionary)
+        compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded, dictionary=dictionary)
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        
     elif args['algorithm'] == 'arithmetic':
         data = read_data(args['input'])
         string = data.rstrip("\n") + TERMINATOR
@@ -85,7 +96,7 @@ def main(args):
         (shape, cluster_centers, labels) = algorithm.compress(input=img, clusters=args['clusters'])
         compress_ratio = algorithm.calculate_compression_ratio(input=img, clusters=args['clusters'])
         print("[INFO] The compression ratio is {}".format(compress_ratio))
-        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        #input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(image_shape=shape,cluster_centers=cluster_centers, labels=labels)
         # cv2.imshow('The origin image', new_data)
         # cv2.waitKey(0)
