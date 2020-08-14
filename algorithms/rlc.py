@@ -25,14 +25,14 @@ class RLC(Base):
                 count += 1
                 i += 1
 
-            print("\t- {} occur {} times continuous..".format(input_string[i], count))
+            #print("\t- {} occur {} times continuous..".format(input_string[i], count))
             time.sleep(0.01)
 
             # Append the current character with number of times it appear
             result = result + "{}:{} ".format(input_string[i], count)
             i += 1
 
-        print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
+        #print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
         return result
 
 
@@ -40,7 +40,7 @@ class RLC(Base):
 
         encoded_string = encoded
 
-        print("[INFO] The string need decoded is\n{}".format(encoded_string))
+        #print("[INFO] The string need decoded is\n{}".format(encoded_string))
         count_characters = encoded_string.split(" ")
         result = ''
         print("[INFO] Decoding ...")
@@ -51,10 +51,10 @@ class RLC(Base):
 
             result += c * int(count)
 
-            print("\tDecoded ...{}".format(c * int(count)))
+            #print("\tDecoded ...{}".format(c * int(count)))
             time.sleep(0.01)
 
-        print("[INFO] The decoded string is {}".format(result))
+        #print("[INFO] The decoded string is {}".format(result))
         return result
 
 

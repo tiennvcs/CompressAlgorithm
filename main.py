@@ -29,7 +29,7 @@ def main(args):
     elif args['algorithm'] == 'huffman':
         data = read_data(args['input'])
         (huffman_code, encoded_string) = algorithm.compress(input=data)
-        compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded_string)
+        compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded_string, huffman_code=huffman_code)
         print("The compression ratio is {}".format(compress_ratio))
         input("Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(encoded=encoded_string, huffman_code=huffman_code)
@@ -71,6 +71,25 @@ def main(args):
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
+
+    elif args['algorithm'] == 'kmean':
+        try:
+            img = cv2.imread(os.path.abspath(args['input']))
+        except:
+            print("The image is not found")
+            exit(0)
+        cv2.imshow('The origin image', img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
+
+        (shape, cluster_centers, labels) = algorithm.compress(input=img, clusters=args['clusters'])
+        compress_ratio = algorithm.calculate_compression_ratio(input=img, clusters=args['clusters'])
+        print("[INFO] The compression ratio is {}".format(compress_ratio))
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        new_data = algorithm.decompress(image_shape=shape,cluster_centers=cluster_centers, labels=labels)
+        cv2.imshow('The origin image', new_data)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     args = get_arguments()

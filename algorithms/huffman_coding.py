@@ -63,7 +63,7 @@ class HuffmanCoding(Base):
 
         print(output_freq)
 
-        print("--> The encoded with code is {}".format({encoded_string}))
+        #print("--> The encoded with code is {}".format({encoded_string}))
         return huffman_code, encoded_string
 
 
@@ -88,11 +88,11 @@ class HuffmanCoding(Base):
                     result.append(key_list[val_list.index(s)])
                     s = ''
 
-        print("--> The decoded with code is {}".format(result))
+        #print("--> The decoded with code is {}".format(result))
         return result
 
 
-    def calculate_compression_ratio(self, input: str, encoded: str):
+    def calculate_compression_ratio(self, input: str, encoded: str, huffman_code):
         b0 = len(input) * 8
         b1 = len(encoded)
         return b0 / b1
