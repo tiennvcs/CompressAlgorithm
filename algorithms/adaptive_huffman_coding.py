@@ -129,7 +129,7 @@ class HuffmanCodingAdaptive(Base):
         nodes = []
         seen = [None] * 256
 
-        print("[INFO] Encoding ...")
+        print("\n[INFO] Encoding ...")
 
         result = ''
         for c in text:
@@ -147,7 +147,7 @@ class HuffmanCodingAdaptive(Base):
 
     def decompress(self, encoded):
         text = encoded
-        print("[INFO] Decompressing ...")
+        print("\n[INFO] Decompressing ...")
         result = ''
         symbol = get_symbol_by_ascii(text[:8])
         result += symbol

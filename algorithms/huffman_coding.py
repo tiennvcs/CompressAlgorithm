@@ -38,7 +38,7 @@ class HuffmanCoding(Base):
     def compress(self, input: object):
 
         input_string = input
-        print("[INFO] Encoding ...")
+        print("\n[INFO] Encoding ...")
         # Calculating frequency
         freq = dict(Counter(input_string))
         freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
@@ -63,13 +63,13 @@ class HuffmanCoding(Base):
 
         print(output_freq)
 
-        #print("--> The encoded with code is {}".format({encoded_string}))
+        print("--> The encoded with code is {}".format({encoded_string}))
         return huffman_code, encoded_string
 
 
     def decompress(self, encoded: str, huffman_code: dict, type_input="str"):
         encoded_string = encoded
-        print("[INFO] Decompressing ...")
+        print("\n[INFO] Decompressing ...")
         key_list = list(huffman_code.keys())
         val_list = list(huffman_code.values())
         s = ''
@@ -88,7 +88,7 @@ class HuffmanCoding(Base):
                     result.append(key_list[val_list.index(s)])
                     s = ''
 
-        #print("--> The decoded with code is {}".format(result))
+        print("--> The decoded with code is {}".format({result}))
         return result
 
 

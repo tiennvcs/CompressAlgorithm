@@ -25,7 +25,7 @@ class RLC(Base):
                 count += 1
                 i += 1
 
-            #print("\t- {} occur {} times continuous..".format(input_string[i], count))
+            print("\t- {} occur {} times continuous..".format(input_string[i], count))
             time.sleep(0.01)
 
             # Append the current character with number of times it appear
@@ -34,7 +34,7 @@ class RLC(Base):
                 result = result + str(count)
             i += 1
 
-        #print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
+        print("--> The string is encoded with code is {}".format({result}))
         return result
 
 

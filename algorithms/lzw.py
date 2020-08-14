@@ -12,6 +12,8 @@ class LZW(Base):
     def compress(self, input: str, dictionary):
 
         input_string = input
+        print("--> The original string is {}".format({input_string}))
+        print("\n[INFO] Encoding ...")
         print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format("Input", "Current String", "In dictionary", "Encoded Output", "Index"))
         s = ""
         res_string = []
@@ -45,7 +47,7 @@ class LZW(Base):
                 index = len(dictionary)-1
                 s = i
             count += 1
-            #print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format(input_string[0:count], cs, stb, ec_out, index))
+            print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format(input_string[0:count], cs, stb, ec_out, index))
 
         return (res_string, dictionary)
 
@@ -78,6 +80,7 @@ class LZW(Base):
                 index = len(dictionary) - 1
             count += 1
             print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format(encoded_string[0: count*2], cs, stb, decode, index))
+        print("--> The decoded with code is {}".format({decode}))
         return decode
 
     def calculate_compression_ratio(self, input, encoded, dictionary):

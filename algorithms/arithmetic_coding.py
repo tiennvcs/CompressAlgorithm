@@ -72,7 +72,8 @@ class Arithmetic(Base):
     def compress(self, input: str, probability_table):
 
         input_string = input
-        print("[INFO] Compressing ...")
+        print("--> The original string is {}".format({input_string}))
+        print("\n[INFO] Encoding ...")
         low = 0.0
         high = 1.0
         range = 1.0
@@ -137,6 +138,7 @@ class Arithmetic(Base):
             value = round((value - low) / range, 10)
 
         print("-"*92)
+        print("--> The decoded with code is {}".format({res}))
         return res
 
 

@@ -20,6 +20,7 @@ def main(args):
 
     if args['algorithm'] == 'rlc':
         data = read_data(args['input'])
+        print("--> The original string is {}".format({data}))
         encoded = algorithm.compress(input=data)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded)
         print("The compression ratio is {}".format(compress_ratio))
@@ -28,6 +29,7 @@ def main(args):
 
     elif args['algorithm'] == 'huffman':
         data = read_data(args['input'])
+        print("--> The original string is {}".format({data}))
         (huffman_code, encoded_string) = algorithm.compress(input=data)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded_string, huffman_code=huffman_code)
         print("The compression ratio is {}".format(compress_ratio))
@@ -36,6 +38,7 @@ def main(args):
 
     elif args['algorithm'] == 'huffman_adap':
         data = read_data(args['input'])
+        print("--> The original string is {}".format({data}))
         encoded_string = algorithm.compress(input=data)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded_string)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
@@ -44,6 +47,7 @@ def main(args):
 
     elif args['algorithm'] == 'lzw':
         data = read_data(args['input'])
+        print("--> The original string is {}".format({data}))
         dictionary = []
         for i in data:
             if i not in dictionary:
@@ -55,15 +59,17 @@ def main(args):
 
     elif args['algorithm'] == 'arithmetic':
         data = read_data(args['input'])
+        print("--> The original string is {}".format({data}))
         string = data.rstrip("\n") + TERMINATOR
         probability_table = get_probability_table(string)
         print_probability_table(table=probability_table)
         encoded = algorithm.compress(input=string, probability_table=probability_table)
         compress_ratio = algorithm.calculate_compression_ratio(input=string, encoded=encoded, table=probability_table)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
-        #input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        #new_data = algorithm.decompress(encoded=encoded, table=probability_table)
-        #print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
+
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        new_data = algorithm.decompress(encoded=encoded, table=probability_table)
+        print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
 
     elif args['algorithm'] == 'jpeg_lossless':
         try:
@@ -71,17 +77,17 @@ def main(args):
         except:
             print("The image is not found")
             exit(0)
-        # cv2.imshow('The origin image', img)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow('The origin image', img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
-        #encoded = algorithm.compress(input=string, probability_table=probability_table)
+        encoded = algorithm.compress(input=string, probability_table=probability_table)
         (shape, predictor, huffman_code, encoded) = algorithm.compress(
                                                         input=img, predictor=args['predictor'])
         compress_ratio = algorithm.calculate_compression_ratio(input=img, encoded=encoded)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        #new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
+        new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
 
     elif args['algorithm'] == 'kmean':
         try:
@@ -89,18 +95,18 @@ def main(args):
         except:
             print("The image is not found")
             exit(0)
-        # cv2.imshow('The origin image', img)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow('The origin image', img)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
         (shape, cluster_centers, labels) = algorithm.compress(input=img, clusters=args['clusters'])
         compress_ratio = algorithm.calculate_compression_ratio(input=img, clusters=args['clusters'])
         print("[INFO] The compression ratio is {}".format(compress_ratio))
-        #input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(image_shape=shape,cluster_centers=cluster_centers, labels=labels)
-        # cv2.imshow('The origin image', new_data)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow('The origin image', new_data)
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     args = get_arguments()
