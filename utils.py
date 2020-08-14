@@ -4,7 +4,7 @@ import argparse
 def read_data(path_file):
     if path_file.endswith(".txt"):
         with open(path_file, 'r', encoding="utf8") as f:
-            data = f.read()
+            data = f.read().rstrip("\n")
     elif path_file.endswith(".png") or path_file.endswith(".jpeg"):
         data = cv2.imread(path_file)
 

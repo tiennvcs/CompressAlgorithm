@@ -54,11 +54,13 @@ class LZW(Base):
 
     def decompress(self, encoded: str, dictionary):
 
-        encoded_string = encoded
+        encoded_string = ""
+        for s in encoded:
+            encoded_string += s + " "
         s = 0
         decode = ""
         count = 0
-        input_copy = [int (x) for x in encoded_string.split(" ")]
+        input_copy = [int (x) for x in encoded_string.rstrip(" ").split(" ")]
         cs = dictionary[input_copy[0]]
         print("|{:<20}|{:<20}|{:<20}|{:<20}|{:<20}|".format("Input", "Current String", "Seen this Before ?", "Decoded Output", "Index"))
         for i in input_copy:
@@ -118,7 +120,7 @@ def main(_args):
                 dictionary.append(i)
         dictionary.sort()
 
-        dictionary, encoded = lzw.compress(input=string, dictionary=dictionary)
+        encoded, dictionary = lzw.compress(input=string, dictionary=dictionary)
         compress_ratio = lzw.calculate_compression_ratio(input=string, encoded=encoded, dictionary=dictionary)
 
         print("[INFO] The compression ratio is {}".format(compress_ratio))
@@ -128,8 +130,8 @@ def main(_args):
 
     elif _args['mode'] == 'decompress':
         with open(args['input'], 'rb') as f:
-            dictionary, encoded_string = pickle.load(f)
-        decoded_string  = lzw.decompress(encoded=encoded_string, dictionary=dictionary)
+            encoded, dictionary = pickle.load(f)
+        decoded_string  = lzw.decompress(encoded=encoded, dictionary=dictionary)
     else:
         print("The selected mode is not valid")
         exit(0)

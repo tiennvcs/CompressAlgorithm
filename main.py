@@ -53,9 +53,13 @@ def main(args):
             if i not in dictionary:
                 dictionary.append(i)
         dictionary.sort()
-        dictionary, encoded = algorithm.compress(input=data, dictionary=dictionary)
+        encoded, dictionary = algorithm.compress(input=data, dictionary=dictionary)
         compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded, dictionary=dictionary)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
+        input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
+        new_data = algorithm.decompress(encoded=encoded, dictionary=dictionary)
+        print("[INFO] The decoded data: {}".format(new_data.rstrip(TERMINATOR)))
+
 
     elif args['algorithm'] == 'arithmetic':
         data = read_data(args['input'])
