@@ -1,13 +1,122 @@
-0.25
-ERROR
-0.26
-0.27
-ERROR
-ERROR
-ERROR
-0.26
-ERROR
-ERROR
-ERROR
-0.25
-ERROR
+1.0007
+1.0011
+1.0008
+1.0011
+1.0004
+1.0009
+1.0011
+1.001
+1.001
+1.0003
+1.0008
+1.0012
+1.0006
+1.0011
+1.0006
+1.0009
+1.0005
+1.0036
+1.001
+1.0018
+---------------------
+1.0003
+1.0002
+1.0003
+1.0008
+1.0005
+1.0008
+1.0005
+1.0002
+1.0002
+1.0001
+1.0004
+1.0009
+1.0001
+1.0003
+1.0005
+1.0008
+1.0004
+1.0005
+1.0006
+1.0002
+-------------------------------
+python main.py -al rlc -i experiments/text/text1.txt
+o
+python main.py -al rlc -i experiments/text/text2.txt
+o
+python main.py -al rlc -i experiments/text/text3.txt
+o
+python main.py -al rlc -i experiments/text/text4.txt
+o
+python main.py -al rlc -i experiments/text/text5.txt
+o
+python main.py -al rlc -i experiments/text/text6.txt
+o
+python main.py -al rlc -i experiments/text/text7.txt
+o
+python main.py -al rlc -i experiments/text/text8.txt
+o
+python main.py -al rlc -i experiments/text/text9.txt
+o
+python main.py -al rlc -i experiments/text/text10.txt
+o
+python main.py -al rlc -i experiments/text/text11.txt
+o
+python main.py -al rlc -i experiments/text/text12.txt
+o
+python main.py -al rlc -i experiments/text/text13.txt
+o
+python main.py -al rlc -i experiments/text/text14.txt
+o
+python main.py -al rlc -i experiments/text/text15.txt
+o
+python main.py -al rlc -i experiments/text/text16.txt
+o
+python main.py -al rlc -i experiments/text/text17.txt
+o
+python main.py -al rlc -i experiments/text/text18.txt
+o
+python main.py -al rlc -i experiments/text/text19.txt
+o
+python main.py -al rlc -i experiments/text/text20.txt
+o
+python main.py -al rlc -i experiments/text/text21.txt
+o
+python main.py -al rlc -i experiments/text/text22.txt
+o
+python main.py -al rlc -i experiments/text/text23.txt
+o
+python main.py -al rlc -i experiments/text/text24.txt
+o
+python main.py -al rlc -i experiments/text/text25.txt
+o
+python main.py -al rlc -i experiments/text/text26.txt
+o
+python main.py -al rlc -i experiments/text/text27.txt
+o
+python main.py -al rlc -i experiments/text/text28.txt
+o
+python main.py -al rlc -i experiments/text/text29.txt
+o
+python main.py -al rlc -i experiments/text/text30.txt
+o
+python main.py -al rlc -i experiments/text/text31.txt
+o
+python main.py -al rlc -i experiments/text/text32.txt
+o
+python main.py -al rlc -i experiments/text/text33.txt
+o
+python main.py -al rlc -i experiments/text/text34.txt
+o
+python main.py -al rlc -i experiments/text/text35.txt
+o
+python main.py -al rlc -i experiments/text/text36.txt
+o
+python main.py -al rlc -i experiments/text/text37.txt
+o
+python main.py -al rlc -i experiments/text/text38.txt
+o
+python main.py -al rlc -i experiments/text/text39.txt
+o
+python main.py -al rlc -i experiments/text/text40.txt
+o
