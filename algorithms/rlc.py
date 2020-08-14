@@ -13,7 +13,8 @@ class RLC(Base):
 
         input_string = input
         print("[INFO] The string need encode is \n\t{}".format(input_string))
-        result = str()
+        rcom = str()
+        _result = str()
         i = 0
 
         print("[INFO] Encoding ...")
@@ -29,13 +30,14 @@ class RLC(Base):
             time.sleep(0.01)
 
             # Append the current character with number of times it appear
-            result = result + input_string[i]
+            _result = _result + input_string[i] + ":" + str(count) + " "
+            rcom = rcom + input_string[i]
             if count > 1:
-                result = result + str(count)
+                rcom = rcom + str(count)
             i += 1
 
-        print("--> The string is encoded with code is {}".format({result}))
-        return result
+        print("--> The string is encoded with code is {}".format({rcom}))
+        return _result, rcom
 
 
     def decompress(self, encoded):
@@ -53,10 +55,10 @@ class RLC(Base):
 
             result += c * int(count)
 
-            #print("\tDecoded ...{}".format(c * int(count)))
+            print("\tDecoded ...{}".format(c * int(count)))
             time.sleep(0.01)
 
-        #print("[INFO] The decoded string is {}".format(result))
+        print("[INFO] The decoded string is {}".format(result))
         return result
 
 
@@ -90,8 +92,8 @@ def main(_args):
     # Check the mode
     rlc = RLC()
     if _args['mode'] == 'compress':
-        result = rlc.compress(input_string=string)
-        compress_ratio = rlc.calculate_compression_ratio(input_string=string, encoded_string=result)
+        result, rcom = rlc.compress(input_string=string)
+        compress_ratio = rlc.calculate_compression_ratio(input_string=string, encoded_string=rcom)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         # Store the output data to disk
         with open(_args['output'], 'w') as f:
