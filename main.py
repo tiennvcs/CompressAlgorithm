@@ -60,9 +60,9 @@ def main(args):
         except:
             print("The image is not found")
             exit(0)
-        cv2.imshow('The origin image', img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # cv2.imshow('The origin image', img)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         #encoded = algorithm.compress(input=string, probability_table=probability_table)
         (shape, predictor, huffman_code, encoded) = algorithm.compress(
@@ -70,7 +70,7 @@ def main(args):
         compress_ratio = algorithm.calculate_compression_ratio(input=img, encoded=encoded)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
+        #new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
 
     elif args['algorithm'] == 'kmean':
         try:
@@ -78,18 +78,18 @@ def main(args):
         except:
             print("The image is not found")
             exit(0)
-        cv2.imshow('The origin image', img)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # cv2.imshow('The origin image', img)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
         (shape, cluster_centers, labels) = algorithm.compress(input=img, clusters=args['clusters'])
         compress_ratio = algorithm.calculate_compression_ratio(input=img, clusters=args['clusters'])
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(image_shape=shape,cluster_centers=cluster_centers, labels=labels)
-        cv2.imshow('The origin image', new_data)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # cv2.imshow('The origin image', new_data)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
 
 if __name__ == '__main__':
     args = get_arguments()
