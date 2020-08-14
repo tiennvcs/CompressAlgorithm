@@ -85,13 +85,12 @@ def main(args):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
-        encoded = algorithm.compress(input=string, probability_table=probability_table)
         (shape, predictor, huffman_code, encoded) = algorithm.compress(
                                                         input=img, predictor=args['predictor'])
         compress_ratio = algorithm.calculate_compression_ratio(input=img, encoded=encoded)
         print("[INFO] The compression ratio is {}".format(compress_ratio))
         input("\n[INFO] Encoded the input data ... Press any key to decomress the encoded data ...")
-        new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
+        #new_data = algorithm.decompress(shape=shape, huffman_code=huffman_code, encoded=encoded, predictor=predictor)
 
     elif args['algorithm'] == 'kmean':
         try:

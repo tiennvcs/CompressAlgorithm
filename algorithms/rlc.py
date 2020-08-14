@@ -22,7 +22,7 @@ class RLC(Base):
 
             # Count the occurrence of current word
             count = 1
-            while i < len(input_string) and input_string[i] == input_string[i + 1]:
+            while i < len(input_string) - 1 and input_string[i] == input_string[i + 1]:
                 count += 1
                 i += 1
 
