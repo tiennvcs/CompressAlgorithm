@@ -21,8 +21,8 @@ def main(args):
     if args['algorithm'] == 'rlc':
         data = read_data(args['input'])
         print("--> The original string is {}".format({data}))
-        encoded = algorithm.compress(input=data)
-        compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=encoded)
+        encoded, rcom = algorithm.compress(input=data)
+        compress_ratio = algorithm.calculate_compression_ratio(input=data, encoded=rcom)
         print("The compression ratio is {}".format(compress_ratio))
         input("Encoded the input data ... Press any key to decomress the encoded data ...")
         new_data = algorithm.decompress(encoded=encoded)
