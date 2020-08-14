@@ -29,7 +29,9 @@ class RLC(Base):
             time.sleep(0.01)
 
             # Append the current character with number of times it appear
-            result = result + "{}:{} ".format(input_string[i], count)
+            result = result + input_string[i]
+            if count > 1:
+                result = result + str(count)
             i += 1
 
         #print("--> The string {} is encoded with code is {}".format({input_string}, {result}))
